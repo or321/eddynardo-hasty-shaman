@@ -149,7 +149,7 @@ var Engine = function() {
 	this.recording = new VideoRecorder(0);
 	this.playback = haxe_ds_Option.None;
 	this.control = new PlayControl();
-	this.frameLength = 16;
+	this.frameLength = 1000.0/60.0;
 	var _gthis = this;
 	this._requestAnimationFrame = ($_=window,$bind($_,$_.requestAnimationFrame));
 	this._now = ($_=window.performance,$bind($_,$_.now));

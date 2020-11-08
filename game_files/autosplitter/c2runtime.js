@@ -4981,19 +4981,19 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			return;
 		if (!background_wake)
 		{
-			if (raf)
-				this.raf_id = raf(this.tickFunc);
+            if (raf){
+                this.raf_id = raf(this.tickFunc);
+            }
 			else
 			{
 				this.timeout_id = setTimeout(this.tickFunc, this.isMobile ? 1 : 16);
 			}
 		}
         
-        // TAS 1 - game loop top level
         var raf_time = timestamp || nowtime;
-        //var raf_time = nowtime;
         
-        window.tas_autosplitter.onUpdate(raf_time);
+        // AUTOSPLITTER 1 - game loop top level
+        window.autosplitter.onUpdate(raf_time);
 
 		var fsmode = this.fullscreen_mode;
 		var isfullscreen = (document["mozFullScreen"] || document["webkitIsFullScreen"] || document["fullScreen"] || !!document["msFullscreenElement"]) && !this.isCordova;
@@ -5231,8 +5231,8 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	};
 	Runtime.prototype.doChangeLayout = function (changeToLayout)
 	{
-        // TAS 2 - On starting a new level
-        window.tas_autosplitter.onScene(changeToLayout.name);
+        // AUTOSPLITTER 2 - On starting a new level
+        window.autosplitter.onScene(changeToLayout.name);
 
 		var prev_layout = this.running_layout;
 		this.running_layout.stopRunning();
@@ -17859,8 +17859,8 @@ cr.plugins_.Audio = function(runtime)
 	function Acts() {};
 	Acts.prototype.Play = function (file, looping, vol, tag)
 	{
-        // TAS 3 - on playing a sound file
-        window.tas_autosplitter.onSound(file);
+        // AUTOSPLITTER 3 - on playing a sound file
+        window.autosplitter.onSound(file[0]);
 
 		if (silent)
 			return;
@@ -19444,16 +19444,16 @@ cr.plugins_.Keyboard = function(runtime)
 		var self = this;
 		if (!this.runtime.isDomFree)
 		{
-			jQuery(document).keydown(
-				function(info) {
-					self.onKeyDown(info);
-				}
-			);
-			jQuery(document).keyup(
-				function(info) {
-					self.onKeyUp(info);
-				}
-			);
+            jQuery(document).keydown(
+                function(info) {
+                    self.onKeyDown(info);
+                }
+            );
+            jQuery(document).keyup(
+                function(info) {
+                    self.onKeyUp(info);
+                }
+            );
 		}
 	};
 	var keysToBlockWhenFramed = [32, 33, 34, 35, 36, 37, 38, 39, 40, 44];

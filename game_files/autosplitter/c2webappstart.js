@@ -16,6 +16,7 @@ function onVisibilityChanged() {
 		cr_setSuspended(false);
 };
 
+
 document.addEventListener("visibilitychange", onVisibilityChanged, false);
 document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
 document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);

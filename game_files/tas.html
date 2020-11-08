@@ -33,6 +33,24 @@
 			touch-action: none;
 			-ms-touch-action: none;
 		}
+
+        .speedrun-mode-button{
+            position: absolute;
+            right: 20px;
+            top: 5px;
+            height: 40px;
+            font-size: 25px;
+            padding: 3px;
+            width: 240px;
+            outline: 0;
+            border-radius: 6px;
+
+            background-color: transparent;
+            border-color: white;
+            color: white;
+
+            cursor: pointer;
+        }
     </style>
 	
 
@@ -41,7 +59,17 @@
 <body>
 	<!-- The canvas must be inside a div called c2canvasdiv -->
 	<div id="c2canvasdiv">
-	
+    
+        <div style="position:fixed; width:100%; height:50px; background-color:#2121218c; font-weight: bold; font-size: 40px; bottom:0px; ">
+            <span style="display:inline-block"> Level time: <span id="level_timer" style="color:green;"> --- </span> </span> ||
+            <span style="display:inline-block"> Level WR: <span id="level_wr" style="color:green;"> --- </span> </span> ||
+            <span style="display:inline-block" speedrun-mode-element> Total time: <span id="total_timer" style="color:green;"> --- </span> </span> ||
+            <span style="display:inline-block" speedrun-mode-element> Load time: <span id="load_timer" style="color:green;"> --- </span> </span>
+
+            <button id="btn_speedrun_mode" class="speedrun-mode-button">Speedrun mode: on</button>
+            
+        </div>
+
 		<!-- The canvas the project will render to.  If you change its ID, don't forget to change the
 		ID the runtime looks for in the jQuery ready event (above). -->
 		<canvas id="c2canvas" width="320" height="180">
