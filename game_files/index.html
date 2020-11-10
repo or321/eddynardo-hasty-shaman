@@ -26,12 +26,12 @@
             <div> Level time: <span id="level_timer" class="data-number"> --- </span> </div> ||
             <div> WR: <span id="level_wr" class="data-number"> --- </span> </div> ||
             
-            <div speedrun-mode-element>
+            <div id="speedrun_mode_data">
                 <div> Speedrun time: <span id="speedrun_timer" class="data-number"> --- </span> </div> ||
                 <div> Load time: <span id="transition_timer" class="data-number"> --- </span> </div>
             </div>
 
-			<div style="display: none;" normal-mode-element>
+			<div style="display: none;" id="practice_mode_data">
 				<span id="level_select_message" style="font-size: 30px;">Use '+' or '-' to move between levels</span>
                 <button id="btn_previous_level" class="autosplitter-button voodoo" style="display: none;">&lt; Previous level</button>
                 <button id="btn_next_level" class="autosplitter-button voodoo" style="display: none;">Next level &gt;</button>
@@ -64,15 +64,19 @@
 			</tr>
 			<tr>
 				<td>Speedrun time:</td>
-				<td><span id="speedrun_time_stat" class="data-number">123.456</span></td>
+				<td><span id="speedrun_time_stat" class="data-number">---</span></td>
 			</tr>
 			<tr>
 				<td>Loadless time:</td>
-				<td><span id="loadless_time_stat" class="data-number">111.111</span></td>
+				<td><span id="loadless_time_stat" class="data-number">---</span></td>
 			</tr>
 		</table>
 
-		<button class="extra-stats-button"><span id="extra-stats-button-arrow">&lt;</span> Extra stats</button>
+		<button class="extra-stats-button" id="btn_extra_stats"><span id="extra_stats_button_arrow">&lt;</span> Extra stats</button>
+	</div>
+
+	<div class="extra-speedrun-stats-modal" id="extra_speedrun_stats">
+
 	</div>
 
 
@@ -255,7 +259,8 @@
 	<!-- Pages load faster with scripts at the bottom -->
 	
     <script src="jquery-2.1.1.min.js"></script>
-    
+	
+	<script src="speedrun_stats_handler.js"></script>
     <script src="autosplitter/autosplitter.js"></script>
 	
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.

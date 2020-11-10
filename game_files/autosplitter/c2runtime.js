@@ -4993,7 +4993,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
         var raf_time = timestamp || nowtime;
         
         // AUTOSPLITTER 1 - game loop top level
-        window.autosplitter.onUpdate(raf_time);
+        _autosplitter.onUpdate(raf_time);
 
 		var fsmode = this.fullscreen_mode;
 		var isfullscreen = (document["mozFullScreen"] || document["webkitIsFullScreen"] || document["fullScreen"] || !!document["msFullscreenElement"]) && !this.isCordova;
@@ -5232,7 +5232,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	Runtime.prototype.doChangeLayout = function (changeToLayout)
 	{
         // AUTOSPLITTER 2 - On starting a new level
-        window.autosplitter.onScene(changeToLayout.name);
+        _autosplitter.onScene(changeToLayout.name);
 
 		var prev_layout = this.running_layout;
 		this.running_layout.stopRunning();
@@ -17860,7 +17860,7 @@ cr.plugins_.Audio = function(runtime)
 	Acts.prototype.Play = function (file, looping, vol, tag)
 	{
         // AUTOSPLITTER 3 - on playing a sound file
-        window.autosplitter.onSound(file[0]);
+        _autosplitter.onSound(file[0]);
 
 		if (silent)
 			return;
