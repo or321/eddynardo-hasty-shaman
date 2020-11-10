@@ -1,7 +1,7 @@
 window.autosplitter = {};
 
 var chestsInLevel = [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 1, 2, 2];
-var wrs = ["2.87", "3.60", "3.97", "5.10", "3.83", "2.70", "6.70", "5.02", "5.60", "6.13", "5.60", "4.32", "6.15", "6.80", "6.85"];
+var wrs = ["2.87", "3.60", "3.92", "4.93", "3.65", "2.65", "6.52", "4.87", "5.60", "6.10", "5.50", "4.25", "6.13", "6.75", "6.72"];
 
 var state = {
     speedrun_mode_active: true,
@@ -15,7 +15,12 @@ var state = {
     in_transition: false,
     levelStartTime: null,
     speedrunStartTime: null,
-    transitionStartTime: null
+    transitionStartTime: null,
+    speedrun_finished: false
+}
+
+function moveToLevel(level) {
+    window.game.doChangeLayout(window.game.layouts_by_index[level + 2]);
 }
 
 function showLevelTime() {
@@ -49,6 +54,21 @@ window.autosplitter.onSound = function (sound) {
 window.autosplitter.onScene = function (name) {
     state.level = parseInt(name.slice(5, 10));
 
+    // Specifically for Hasty Shaman:
+    // When starting a new game from the main menu, there is a random loading time which cause a mismatch between IGT 
+    // and the autosplitter timer. So in this case I force a level reset.
+    if (state.in_menu && state.level == 1){
+        setTimeout(() => {
+            var e = jQuery.Event("keydown");
+            e.which = 82;
+            $(document).trigger(e);
+
+            var e = jQuery.Event("keyup");
+            e.which = 82;
+            $(document).trigger(e);
+        }, 150);
+    }
+
     state.in_menu = name === "Menu";
     state.in_credits = name === "End";
     state.in_level = !state.in_menu && !state.in_credits
@@ -61,6 +81,7 @@ window.autosplitter.onScene = function (name) {
         document.getElementById("level_timer").innerText = "0.00";
         document.getElementById("level_wr").innerText = wrs[state.level - 1];
 
+        $("#level_select_message").css("visibility", "visible");
         $("#btn_previous_level").css("visibility", state.level > 1 ? "visible" : "hidden");
         $("#btn_next_level").css("visibility", state.level < 15 ? "visible" : "hidden");
 
@@ -69,6 +90,7 @@ window.autosplitter.onScene = function (name) {
         document.getElementById("level_timer").innerText = "---";
         document.getElementById("level_wr").innerText = "---";
 
+        $("#level_select_message").css("visibility", "hidden");
         $("#btn_previous_level").css("visibility", "hidden");
         $("#btn_next_level").css("visibility", "hidden");
 
@@ -88,6 +110,7 @@ window.autosplitter.onScene = function (name) {
 
         if (state.in_credits){
             // Show final stats of speedrun
+            ShowSpeedrunStats();
         }
     }
 }
@@ -97,11 +120,6 @@ window.autosplitter.onScene("Menu");
 window.autosplitter.onUpdate = function (time) {
     state.lastFrameTime = time;
 
-    /*
-    if (state.in_level && state.damselCount < chestsInLevel[state.level - 1]){
-        showLevelTime();
-    }
-    */
     if (state.in_level){
         if (state.in_transition){
             showTransitionTime();
@@ -116,6 +134,14 @@ window.autosplitter.onUpdate = function (time) {
     }
     
 }
+
+window.autosplitter.onTimerReset = function() {
+    console.log("onTimerReset");
+}
+
+/**********
+Speedrun mode handling
+***********/
 
 $("#btn_speedrun_mode").click(function(){
     if (state.speedrun_mode_active){
@@ -132,10 +158,36 @@ $("#btn_speedrun_mode").click(function(){
     }
 });
 
+/**********
+Level movement handling
+***********/
+
 $("#btn_next_level").click(function(){
-    window.game.doChangeLayout(window.game.layouts_by_index[state.level + 2 + 1]);
+    moveToLevel(state.level + 1);
 })
 
 $("#btn_previous_level").click(function(){
-    window.game.doChangeLayout(window.game.layouts_by_index[state.level + 2 - 1]);
+    moveToLevel(state.level - 1);
 })
+
+$(window).keypress(function(e){
+    if (state.speedrun_mode_active || !state.in_level) return;
+
+    // plus/equal sign
+    if ((e.which == 43 || e.which == 61) && state.level < 15){
+        moveToLevel(state.level + 1);
+    }
+
+    // minus sign
+    if (e.which == 45 && state.level > 1){
+        moveToLevel(state.level - 1);
+    }
+})
+
+/**********
+Post-speedrun stats handling
+***********/
+
+function ShowSpeedrunStats() {
+
+}

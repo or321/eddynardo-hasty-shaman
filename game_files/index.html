@@ -12,69 +12,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<meta name="HandheldFriendly" content="true" />
+    <meta name="HandheldFriendly" content="true" />
 	
     <!-- All margins and padding must be zero for the canvas to fill the screen. -->
-	<style type="text/css">
-		* {
-			padding: 0;
-			margin: 0;
-		}
-		html, body {
-			background: #000;
-			color: #fff;
-			overflow: hidden;
-			touch-action-delay: none;
-			touch-action: none;
-			-ms-touch-action: none;
-		}
-		canvas {
-			touch-action-delay: none;
-			touch-action: none;
-			-ms-touch-action: none;
-		}
-
-        .autosplitter-data{
-            position:fixed; 
-            width:100%; 
-            height:50px; 
-            background-color:#2121218c; 
-            font-weight: bold; 
-            font-size: 40px; 
-            bottom:0px;
-            left:0px;
-            right: 0px;
-
-            user-select: none;
-        }
-
-        .autosplitter-data div{
-            display: inline-block;
-        }
-
-        .autosplitter-button{
-            margin: 5px;
-            height: 40px;
-            font-size: 25px;
-            padding: 3px;
-            width: 240px;
-            outline: 0;
-            border-radius: 6px;
-
-            background-color: transparent;
-            border-color: white;
-            color: white;
-
-            cursor: pointer;
-        }
-
-        .autosplitter-button.voodoo{
-            position: relative;
-            top: -4px;
-        }
-    </style>
-	
-
+	<link rel="stylesheet" href="style.css" />
 </head> 
  
 <body>
@@ -82,17 +23,18 @@
 	<div id="c2canvasdiv">
     
         <div class="autosplitter-data">
-            <div> Level time: <span id="level_timer" style="color:green;"> --- </span> </div> ||
-            <div> WR: <span id="level_wr" style="color:green;"> --- </span> </div> ||
+            <div> Level time: <span id="level_timer" class="data-number"> --- </span> </div> ||
+            <div> WR: <span id="level_wr" class="data-number"> --- </span> </div> ||
             
             <div speedrun-mode-element>
-                <div> Speedrun time: <span id="speedrun_timer" style="color:green;"> --- </span> </div> ||
-                <div> Load time: <span id="transition_timer" style="color:green;"> --- </span> </div>
+                <div> Speedrun time: <span id="speedrun_timer" class="data-number"> --- </span> </div> ||
+                <div> Load time: <span id="transition_timer" class="data-number"> --- </span> </div>
             </div>
 
-            <div style="display: none;" normal-mode-element>
-                <button id="btn_previous_level" class="autosplitter-button voodoo">&lt; Previous level</button>
-                <button id="btn_next_level" class="autosplitter-button voodoo">Next level &gt;</button>
+			<div style="display: none;" normal-mode-element>
+				<span id="level_select_message" style="font-size: 30px;">Use '+' or '-' to move between levels</span>
+                <button id="btn_previous_level" class="autosplitter-button voodoo" style="display: none;">&lt; Previous level</button>
+                <button id="btn_next_level" class="autosplitter-button voodoo" style="display: none;">Next level &gt;</button>
             </div>
 
             <button id="btn_speedrun_mode" class="autosplitter-button" style="position: absolute; right: 20px;">Speedrun mode: on</button>
@@ -112,7 +54,203 @@
 			<a href="http://www.apple.com/safari/download/">Apple Safari</a><br/>
 		</canvas>
 		
+    </div>
+	
+	<div class="speedrun-stats-modal" id="speedrun_stats">
+
+		<table class="speedrun-stats-table">
+			<tr>
+				<td colspan="2" style="text-align: center; text-decoration: underline;">Last speedrun</td>
+			</tr>
+			<tr>
+				<td>Speedrun time:</td>
+				<td><span id="speedrun_time_stat" class="data-number">123.456</span></td>
+			</tr>
+			<tr>
+				<td>Loadless time:</td>
+				<td><span id="loadless_time_stat" class="data-number">111.111</span></td>
+			</tr>
+		</table>
+
+		<button class="extra-stats-button"><span id="extra-stats-button-arrow">&lt;</span> Extra stats</button>
 	</div>
+
+
+    <div class="modal-old" id="speedrun_stats_old">
+		<table class="speedrun-stats-old">
+			<tr>
+				<td>
+					Speedrun time:
+				</td>
+				<td>
+					<span class="data-number" id="speedrun_time_stat">111.233</span>
+				</td>
+				
+				<td style="width: 100px;"></td>
+
+				<td>
+					Total jumps:
+				</td>
+				<td>
+					<span class="data-number" id="total_jumps_stat">500</span>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Time without loads:
+				</td>
+				<td>
+					<span class="data-number" id="loadless_time_stat">109.133</span>
+				</td>
+				
+				<td></td>
+
+				<td>
+					Total teleports:
+				</td>
+				<td>
+					<span class="data-number" id="total_teleports_stat">60</span>
+				</td>
+			</tr>
+		</table>
+
+		<div style="width: 200px; margin: auto; margin-top: 20px;">Level times:</div>
+
+		<table class="speedrun-level-stats-old">
+			<tr>
+				<td>
+					Level 1:
+				</td>
+				<td>
+					<span class="data-number" id="level_1_time">2.87</span>
+				</td>
+
+				<td style="width: 100px;"></td>
+
+				<td>
+					Level 6:
+				</td>
+				<td>
+					<span class="data-number" id="level_6_time">2.65</span>
+				</td>
+
+				<td style="width: 100px;"></td>
+
+				<td>
+					Level 11:
+				</td>
+				<td>
+					<span class="data-number" id="level_11_time">5.50</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Level 2:
+				</td>
+				<td>
+					<span class="data-number" id="level_2_time">2.87</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 7:
+				</td>
+				<td>
+					<span class="data-number" id="level_7_time">2.65</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 12:
+				</td>
+				<td>
+					<span class="data-number" id="level_12_time">5.50</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Level 3:
+				</td>
+				<td>
+					<span class="data-number" id="level_3_time">2.87</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 8:
+				</td>
+				<td>
+					<span class="data-number" id="level_8_time">2.65</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 13:
+				</td>
+				<td>
+					<span class="data-number" id="level_13_time">5.50</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Level 4:
+				</td>
+				<td>
+					<span class="data-number" id="level_4_time">2.87</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 9:
+				</td>
+				<td>
+					<span class="data-number" id="level_9_time">2.65</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 14:
+				</td>
+				<td>
+					<span class="data-number" id="level_14_time">5.50</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Level 5:
+				</td>
+				<td>
+					<span class="data-number" id="level_5_time">2.87</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 10:
+				</td>
+				<td>
+					<span class="data-number" id="level_10_time">2.65</span>
+				</td>
+
+				<td></td>
+
+				<td>
+					Level 15:
+				</td>
+				<td>
+					<span class="data-number" id="level_15_time">5.50</span>
+				</td>
+			</tr>
+		</table>
+
+    </div>
 	
 	<!-- Pages load faster with scripts at the bottom -->
 	

@@ -1,0 +1,146 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+html, body {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    touch-action-delay: none;
+    touch-action: none;
+    -ms-touch-action: none;
+}
+canvas {
+    touch-action-delay: none;
+    touch-action: none;
+    -ms-touch-action: none;
+}
+
+.data-number{
+    color: rgb(0, 173, 0);
+}
+
+.autosplitter-data{
+    position:fixed; 
+    width:100%; 
+    height:50px; 
+    background-color:#2121218c; 
+    font-weight: bold; 
+    font-size: 40px; 
+    bottom:0px;
+    left:0px;
+    right: 0px;
+    padding: 5px;
+
+    user-select: none;
+}
+
+.autosplitter-data div{
+    display: inline-block;
+}
+
+.autosplitter-button{
+    margin: 5px;
+    height: 40px;
+    font-size: 25px;
+    padding: 3px;
+    width: 240px;
+    outline: 0;
+    border-radius: 6px;
+
+    background-color: transparent;
+    border-color: white;
+    color: white;
+
+    cursor: pointer;
+}
+
+.autosplitter-button.voodoo{
+    position: relative;
+    top: -4px;
+}
+
+
+.speedrun-stats-modal {
+    /*display: none; /* Hidden by default */
+    position: fixed;
+    right: 0px;
+    bottom: 60px;
+    z-index: 1;
+    padding: 5px;
+
+    width: 300px;
+    min-height: 200px;
+
+    background-color: #212121fb;
+    border: 1px solid white;
+
+    font-weight: bold; 
+    font-size: 27px; 
+}
+.speedrun-stats-table {
+    margin: auto;
+}
+.speedrun-stats-table td {
+    padding: 5px;
+}
+
+
+.extra-stats-button{
+    position: absolute;
+    bottom: 5px;    
+    margin: -6px;
+    width: 312px;
+    height: 40px;
+
+    background-color: transparent;
+    border: 1px solid white;
+
+    cursor: pointer;
+    outline: 0;
+
+    color: white;
+
+    font-size: 18px;
+}
+.extra-stats-button:hover {
+    background-color: #333333ee;
+}
+
+
+.modal-old{
+    display: none; /* Hidden by default */
+    position: fixed;
+    width: 800px;
+    left: 50%;
+    bottom: 30%;
+    transform: translate(-50%, 30%);
+    z-index: 1;
+    padding: 30px;
+
+    overflow: auto;
+    
+    background-color: #212121fb;
+    
+    font-weight: bold; 
+    font-size: 30px; 
+
+    border: 1px solid white;
+}
+
+.speedrun-stats-old {
+    margin: auto;
+}
+.speedrun-stats-old td {
+    /*min-width: 220px;*/
+    padding: 5px;
+}
+
+.speedrun-level-stats-old {
+    margin: auto;
+    font-size: 24px;
+}
+.speedrun-level-stats-old td {
+    /*min-width: 120px;*/
+    padding: 3px;
+}
