@@ -16,8 +16,19 @@ canvas {
     -ms-touch-action: none;
 }
 
+.td-spacer{
+    width: 20px;
+}
+
 .data-number{
     color: rgb(0, 173, 0);
+}
+.fake-speedrun .data-number{
+    color: rgb(255, 70, 70);
+}
+
+.h-align-center{
+    margin: auto;
 }
 
 .autosplitter-data{
@@ -69,7 +80,7 @@ canvas {
     z-index: 1;
     padding: 5px;
 
-    width: 300px;
+    width: 320px;
     min-height: 200px;
 
     background-color: #212121fb;
@@ -77,9 +88,6 @@ canvas {
 
     font-weight: bold; 
     font-size: 27px; 
-}
-.speedrun-stats-table {
-    margin: auto;
 }
 .speedrun-stats-table td {
     padding: 5px;
@@ -89,7 +97,7 @@ canvas {
     position: absolute;
     bottom: 5px;    
     margin: -6px;
-    width: 312px;
+    width: 332px;
     height: 40px;
 
     background-color: transparent;
@@ -109,13 +117,13 @@ canvas {
 .extra-speedrun-stats-modal{
     display: none; /* Hidden by default */
     position: fixed;
-    right: 312px;
+    right: 332px;
     bottom: 60px;
     z-index: 1;
     padding: 5px;
 
-    width: 500px;
-    min-height: 300px;
+    width: 800px;
+    min-height: 400px;
 
     background-color: #212121fb;
     border: 1px solid white;
@@ -124,39 +132,8 @@ canvas {
     font-size: 27px; 
 }
 
-.modal-old{
-    display: none; /* Hidden by default */
-    position: fixed;
-    width: 800px;
-    left: 50%;
-    bottom: 30%;
-    transform: translate(-50%, 30%);
-    z-index: 1;
-    padding: 30px;
-
-    overflow: auto;
-    
-    background-color: #212121fb;
-    
-    font-weight: bold; 
-    font-size: 30px; 
-
-    border: 1px solid white;
-}
-
-.speedrun-stats-old {
-    margin: auto;
-}
-.speedrun-stats-old td {
-    /*min-width: 220px;*/
-    padding: 5px;
-}
-
-.speedrun-level-stats-old {
-    margin: auto;
-    font-size: 24px;
-}
-.speedrun-level-stats-old td {
-    /*min-width: 120px;*/
-    padding: 3px;
+.levels-times-title{
+    margin-top: 20px;
+    width: 200px;
+    text-decoration: underline;
 }

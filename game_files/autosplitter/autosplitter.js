@@ -4,7 +4,8 @@ _autosplitter = function(){
 
     var state = {
         speedrun_mode_active: true,
-        lastFrameTime: null,
+        currentFrameTime: null,
+        previousFrameTime: null,
         damselTime: NaN,
         damselCount: 0,
         level: NaN,
@@ -23,41 +24,50 @@ _autosplitter = function(){
         window.game.doChangeLayout(window.game.layouts_by_index[level + 2]);
     }
 
-    var showLevelTime = function() {
-        levelTime = ((state.lastFrameTime - state.levelStartTime) / 1000).toFixed(2);
-        $("#level_timer").text(levelTime);
+    var getLevelTime = function() {
+        return ((state.currentFrameTime - state.levelStartTime) / 1000);
     }
 
-    var showSpeedrunTime = function() {
-        speedrunTime = ((state.lastFrameTime - state.speedrunStartTime) / 1000).toFixed(2);
-        $("#speedrun_timer").text(speedrunTime);
+    var getSpeedrunTime = function() {
+        return ((state.currentFrameTime - state.speedrunStartTime) / 1000);
     }
 
-    var showTransitionTime = function() {
-        transitionTime = ((state.lastFrameTime - state.transitionStartTime) / 1000).toFixed(2);
-        $("#transition_timer").text(transitionTime);
+    var getTransitionTime = function() {
+        return ((state.currentFrameTime - state.transitionStartTime) / 1000);
     }
 
-    var onSound = function (sound) {
-        if (sound == "damsel") {
-            state.damselTime = state.lastFrameTime;
+    var onSound = function (soundName) {
+        if (soundName == "damsel") {
+            state.damselTime = state.currentFrameTime;
             state.damselCount += 1;
 
             if (state.in_level && state.damselCount >= chestsInLevel[state.level - 1]) {
                 state.in_transition = true;
-                state.transitionStartTime = state.lastFrameTime;
+                state.transitionStartTime = state.currentFrameTime;
                 $("#transition_timer").text("0.00");
+
+                if (state.speedrun_mode_active) {
+                    _speedrunStatsHandler.onLevelEnd(state.level, getLevelTime());
+                }
             }
+        }
+
+        // Track stats for sounds that only happened during gameplay
+        if (state.speedrun_mode_active && state.in_level && !state.in_transition) {
+            _speedrunStatsHandler.onSound(soundName);
         }
     }
 
-    var onScene = function (name) {
-        state.level = parseInt(name.slice(5, 10));
+    var onScene = function (sceneName) {
+        var previousLevel = state.level;
+        var transitionEnded = state.in_transition;
+
+        state.level = parseInt(sceneName.slice(5, 10));
 
         // Specifically for Hasty Shaman:
         // When starting a new game from the main menu, there is a random loading time which cause a mismatch between IGT 
         // and the autosplitter timer. So in this case I force a level reset after a few milliseconds.
-        if (state.in_menu && state.level == 1){
+        if (state.in_menu && state.level === 1){
             setTimeout(() => {
                 var e = jQuery.Event("keydown");
                 e.which = 82; // 'r' key
@@ -69,13 +79,27 @@ _autosplitter = function(){
             }, 150);
         }
 
-        state.in_menu = name === "Menu";
-        state.in_credits = name === "End";
+        if (state.level === 1){
+            _speedrunStatsHandler.onNewSpeedrun();
+        }
+
+        state.in_menu = sceneName === "Menu";
+        state.in_credits = sceneName === "End";
         state.in_level = !state.in_menu && !state.in_credits
         state.in_transition = false;
+        
+        // Handle speedrun stats for the last level or transition (not on entering the first level)
+        if (state.speedrun_mode_active && (state.level > 1 || state.in_credits)){
+            if (transitionEnded) {
+                _speedrunStatsHandler.onTransitionEnd(previousLevel, getTransitionTime());
+            }
+            else {
+                _speedrunStatsHandler.onLevelEnd(previousLevel, getLevelTime());
+            }
+        }
 
         state.damselCount = 0;
-        state.levelStartTime = state.lastFrameTime;
+        state.levelStartTime = state.currentFrameTime;
 
         if (state.in_level) {
             document.getElementById("level_timer").innerText = "0.00";
@@ -104,14 +128,13 @@ _autosplitter = function(){
 
         if (state.speedrun_mode_active) {
             if (state.in_level && state.level == 1){
-                state.speedrunStartTime = state.lastFrameTime;
+                state.speedrunStartTime = state.currentFrameTime;
                 $("#speedrun_timer").text("0.00");
             }
 
             if (state.in_credits){
                 state.show_speedrun_stats = true;
-                // Show final stats of speedrun
-                //UpdateSpeedrunStats();
+                _speedrunStatsHandler.displaySpeedrunStats();
             }
         }
 
@@ -123,18 +146,22 @@ _autosplitter = function(){
     
 
     var onUpdate = function (time) {
-        state.lastFrameTime = time;
+        state.previousFrameTime = state.currentFrameTime;
+        state.currentFrameTime = time;
 
         if (state.in_level){
             if (state.in_transition){
-                showTransitionTime();
+                transitionTime = getTransitionTime();
+                $("#transition_timer").text(transitionTime.toFixed(2));
             }
             else{
-                showLevelTime();
+                levelTime = getLevelTime();
+                $("#level_timer").text(levelTime.toFixed(2));
             }
 
             if (state.speedrun_mode_active){
-                showSpeedrunTime();
+                speedrunTime = getSpeedrunTime();
+                $("#speedrun_timer").text(speedrunTime.toFixed(2));
             }
         }
         

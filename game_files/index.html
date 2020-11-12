@@ -58,9 +58,9 @@
 	
 	<div class="speedrun-stats-modal" id="speedrun_stats">
 
-		<table class="speedrun-stats-table">
+		<table class="h-align-center" cellpadding="5" cellspacing="5">
 			<tr>
-				<td colspan="2" style="text-align: center; text-decoration: underline;">Last speedrun</td>
+				<td colspan="2" style="text-align: center; text-decoration: underline;" id="speedrun_stats_title">Last speedrun</td>
 			</tr>
 			<tr>
 				<td>Speedrun time:</td>
@@ -76,185 +76,105 @@
 	</div>
 
 	<div class="extra-speedrun-stats-modal" id="extra_speedrun_stats">
+		<table class="h-align-center" cellpadding="5" cellspacing="10">
+			<tr>
+				<td>Total deaths:</td>
+				<td><span id="total_deaths_stat" class="data-number">---</span></td>
 
+				<td class="td-spacer"></td>
+
+				<td>Total jumps:</td>
+				<td><span id="total_jumps_stat" class="data-number">---</span></td>
+
+				<td class="td-spacer"></td>
+
+				<td>Total teleports:</td>
+				<td><span id="total_teleports_stat" class="data-number">---</span></td>
+			</tr>
+			<tr>
+				<td>Long loads time:</td>
+				<td><span id="extra_load_time_stat" class="data-number">---</span></td>
+
+				<td colspan="6"></td>
+			</tr>
+		</table>
+
+		<div class="h-align-center levels-times-title">Total level times:</div>
+
+		<table class="h-align-center" cellpadding="5" cellspacing="15">
+			<tr>
+				<td>Level 1:</td>
+				<td><span data-stat-level="1" class="data-number">---</span></td>
+
+				<td class="td-spacer"></td>
+
+				<td>Level 6:</td>
+				<td><span data-stat-level="6" class="data-number">---</span></td>
+
+				<td class="td-spacer"></td>
+
+				<td>Level 11:</td>
+				<td><span data-stat-level="11" class="data-number">---</span></td>
+			</tr>
+			<tr>
+				<td>Level 2:</td>
+				<td><span data-stat-level="2" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 7:</td>
+				<td><span data-stat-level="7" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 12:</td>
+				<td><span data-stat-level="12" class="data-number">---</span></td>
+			</tr>
+			<tr>
+				<td>Level 3:</td>
+				<td><span data-stat-level="3" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 8:</td>
+				<td><span data-stat-level="8" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 13:</td>
+				<td><span data-stat-level="13" class="data-number">---</span></td>
+			</tr>
+			<tr>
+				<td>Level 4:</td>
+				<td><span data-stat-level="4" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 9:</td>
+				<td><span data-stat-level="9" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 14:</td>
+				<td><span data-stat-level="14" class="data-number">---</span></td>
+			</tr>
+			<tr>
+				<td>Level 5:</td>
+				<td><span data-stat-level="5" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 10:</td>
+				<td><span data-stat-level="10" class="data-number">---</span></td>
+
+				<td></td>
+
+				<td>Level 15:</td>
+				<td><span data-stat-level="15" class="data-number">---</span></td>
+			</tr>
+		</table>
 	</div>
 
-
-    <div class="modal-old" id="speedrun_stats_old">
-		<table class="speedrun-stats-old">
-			<tr>
-				<td>
-					Speedrun time:
-				</td>
-				<td>
-					<span class="data-number" id="speedrun_time_stat">111.233</span>
-				</td>
-				
-				<td style="width: 100px;"></td>
-
-				<td>
-					Total jumps:
-				</td>
-				<td>
-					<span class="data-number" id="total_jumps_stat">500</span>
-				</td>
-			</tr>
-
-			<tr>
-				<td>
-					Time without loads:
-				</td>
-				<td>
-					<span class="data-number" id="loadless_time_stat">109.133</span>
-				</td>
-				
-				<td></td>
-
-				<td>
-					Total teleports:
-				</td>
-				<td>
-					<span class="data-number" id="total_teleports_stat">60</span>
-				</td>
-			</tr>
-		</table>
-
-		<div style="width: 200px; margin: auto; margin-top: 20px;">Level times:</div>
-
-		<table class="speedrun-level-stats-old">
-			<tr>
-				<td>
-					Level 1:
-				</td>
-				<td>
-					<span class="data-number" id="level_1_time">2.87</span>
-				</td>
-
-				<td style="width: 100px;"></td>
-
-				<td>
-					Level 6:
-				</td>
-				<td>
-					<span class="data-number" id="level_6_time">2.65</span>
-				</td>
-
-				<td style="width: 100px;"></td>
-
-				<td>
-					Level 11:
-				</td>
-				<td>
-					<span class="data-number" id="level_11_time">5.50</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Level 2:
-				</td>
-				<td>
-					<span class="data-number" id="level_2_time">2.87</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 7:
-				</td>
-				<td>
-					<span class="data-number" id="level_7_time">2.65</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 12:
-				</td>
-				<td>
-					<span class="data-number" id="level_12_time">5.50</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Level 3:
-				</td>
-				<td>
-					<span class="data-number" id="level_3_time">2.87</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 8:
-				</td>
-				<td>
-					<span class="data-number" id="level_8_time">2.65</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 13:
-				</td>
-				<td>
-					<span class="data-number" id="level_13_time">5.50</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Level 4:
-				</td>
-				<td>
-					<span class="data-number" id="level_4_time">2.87</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 9:
-				</td>
-				<td>
-					<span class="data-number" id="level_9_time">2.65</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 14:
-				</td>
-				<td>
-					<span class="data-number" id="level_14_time">5.50</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Level 5:
-				</td>
-				<td>
-					<span class="data-number" id="level_5_time">2.87</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 10:
-				</td>
-				<td>
-					<span class="data-number" id="level_10_time">2.65</span>
-				</td>
-
-				<td></td>
-
-				<td>
-					Level 15:
-				</td>
-				<td>
-					<span class="data-number" id="level_15_time">5.50</span>
-				</td>
-			</tr>
-		</table>
-
-    </div>
 	
 	<!-- Pages load faster with scripts at the bottom -->
 	
