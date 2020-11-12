@@ -21,26 +21,6 @@
 <body>
 	<!-- The canvas must be inside a div called c2canvasdiv -->
 	<div id="c2canvasdiv">
-    
-        <div class="autosplitter-data">
-            <div> Level time: <span id="level_timer" class="data-number"> --- </span> </div> ||
-            <div> WR: <span id="level_wr" class="data-number"> --- </span> </div> ||
-            
-            <div id="speedrun_mode_data">
-                <div> Speedrun time: <span id="speedrun_timer" class="data-number"> --- </span> </div> ||
-                <div> Load time: <span id="transition_timer" class="data-number"> --- </span> </div>
-            </div>
-
-			<div style="display: none;" id="practice_mode_data">
-				<span id="level_select_message" style="font-size: 30px;">Use '+' or '-' to move between levels</span>
-                <button id="btn_previous_level" class="autosplitter-button voodoo" style="display: none;">&lt; Previous level</button>
-                <button id="btn_next_level" class="autosplitter-button voodoo" style="display: none;">Next level &gt;</button>
-            </div>
-
-            <button id="btn_speedrun_mode" class="autosplitter-button" style="position: absolute; right: 20px;">Speedrun mode: on</button>
-            
-        </div>
-
 		<!-- The canvas the project will render to.  If you change its ID, don't forget to change the
 		ID the runtime looks for in the jQuery ready event (above). -->
 		<canvas id="c2canvas" width="320" height="180">
@@ -53,12 +33,30 @@
 			<a href="http://www.google.com/chrome/">Google Chrome</a><br/>
 			<a href="http://www.apple.com/safari/download/">Apple Safari</a><br/>
 		</canvas>
-		
     </div>
-	
+    
+    <div class="autosplitter-data" id="autosplitter_data">
+        <div> Level time: <span id="level_timer" class="data-number">---</span> </div> ||
+        <div> WR: <span id="level_wr" class="data-number">---</span> </div> ||
+        
+        <div id="speedrun_mode_data">
+            <div> Speedrun time: <span id="speedrun_timer" class="data-number"> --- </span> </div> ||
+            <div> Load time: <span id="transition_timer" class="data-number"> --- </span> </div>
+        </div>
+
+        <div style="display: none;" id="practice_mode_data">
+            <span id="level_select_message" style="font-size: 30px;">Use '+' or '-' to move between levels</span>
+            <button id="btn_previous_level" class="autosplitter-button voodoo" style="display: none;">&lt; Previous level</button>
+            <button id="btn_next_level" class="autosplitter-button voodoo" style="display: none;">Next level &gt;</button>
+        </div>
+
+        <button id="btn_speedrun_mode" class="autosplitter-button" style="position: absolute; right: 20px;">Speedrun mode: on</button>
+        
+    </div>
+
 	<div class="speedrun-stats-modal" id="speedrun_stats">
 
-		<table class="h-align-center" cellpadding="5" cellspacing="5">
+		<table class="speedrun-stats-table" cellpadding="5" cellspacing="5">
 			<tr>
 				<td colspan="2" style="text-align: center; text-decoration: underline;" id="speedrun_stats_title">Last speedrun</td>
 			</tr>
@@ -188,6 +186,6 @@
 	<script src="js/c2runtime.js"></script>
 
     <script src="js/c2webappstart.js"></script>
-    
+
 </body> 
 </html> 

@@ -168,6 +168,33 @@ _autosplitter = function(){
     }
 
     /**********
+    Window resize handling
+    ***********/
+
+    var onCanvasResize = function() {
+        var $canvas = $("#c2canvasdiv");
+        var canvas_w = $canvas.width();
+        var canvas_h = $canvas.height();
+        var canvas_marginTop = parseInt($canvas.css("margin-top"));
+        var canvas_marginLeft = parseInt($canvas.css("margin-left"));
+
+        $("#autosplitter_data")
+            .width(canvas_w - 10)
+            .css("left", canvas_marginLeft + "px")
+            .css("bottom", canvas_marginTop + "px");
+
+        var autosplitter_bar_height = $("#autosplitter_data").height();
+
+        $("#speedrun_stats")
+            .css("right", (canvas_marginLeft + 1) + "px")
+            .css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px");
+
+        $("#extra_speedrun_stats")
+            .css("right", (canvas_marginLeft + 320) + "px")
+            .css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px");
+    }
+
+    /**********
     Speedrun mode handling
     ***********/
 
@@ -243,6 +270,7 @@ _autosplitter = function(){
         onSound: onSound,
         onScene: onScene,
         onUpdate: onUpdate,
+        onCanvasResize: onCanvasResize,
         moveToLevel: moveToLevel
     };
 }();

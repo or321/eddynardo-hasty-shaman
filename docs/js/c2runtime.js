@@ -4108,6 +4108,9 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		{
 			window.scrollTo(0, 0);
 		}
+		
+		// AUTOSPLITTER - on changing the canvas size
+		_autosplitter.onCanvasResize();
 	};
 	Runtime.prototype.tryLockOrientation = function ()
 	{
