@@ -1,4 +1,4 @@
-_speedrunStatsHandler = function(){
+_speedrunStatsHandler = function () {
 	var speedrun_stats = {
 		time: null,
 		loadlessTime: null,
@@ -15,13 +15,13 @@ _speedrunStatsHandler = function(){
 	Show time in m:ss.xxx format if the time is less than 10 minutes, otherwise show it in mm:ss.xxx format.
 	This function assumes that no timer will be higher than 1 hour, because then it wouldn't really be a speedrun anymore.
 	*/
-	var getTimeWithFormat = function(timeInSeconds) {
+	var getTimeWithFormat = function (timeInSeconds) {
 		var minutesPosition = (timeInSeconds < 600 ? 15 : 14);
-		var timeInMilliseconds = timeInSeconds * 1000;
+		var timeInMilliseconds = Math.round(timeInSeconds * 1000);
 		return new Date(timeInMilliseconds).toISOString().slice(minutesPosition, -1);
 	}
 
-	var onNewSpeedrun = function() {
+	var onNewSpeedrun = function () {
 		speedrun_stats.time = 0;
 		speedrun_stats.loadlessTime = 0;
 		speedrun_stats.extraLoadTime = 0;
@@ -33,8 +33,8 @@ _speedrunStatsHandler = function(){
 		speedrun_stats.fake = false;
 	}
 
-	var onSound = function(soundName) {
-		switch(soundName) {
+	var onSound = function (soundName) {
+		switch (soundName) {
 			case "jump":
 				speedrun_stats.totalJumps += 1;
 				break;
@@ -48,7 +48,7 @@ _speedrunStatsHandler = function(){
 		}
 	}
 
-	var onLevelEnd = function(level, levelTime) {
+	var onLevelEnd = function (level, levelTime) {
 		speedrun_stats.time += levelTime;
 		speedrun_stats.loadlessTime += levelTime;
 
@@ -58,13 +58,12 @@ _speedrunStatsHandler = function(){
 		speedrun_stats.levelTimes[level - 1] += levelTime;
 	}
 
-	var onTransitionEnd = function(level, transitionTime) {
+	var onTransitionEnd = function (level, transitionTime) {
 		speedrun_stats.time += transitionTime;
 
-		if (transitionTime <= 3){
+		if (transitionTime <= 3) {
 			speedrun_stats.loadlessTime += transitionTime;
-		}
-		else{
+		} else {
 			speedrun_stats.loadlessTime += 3;
 			speedrun_stats.extraLoadTime += transitionTime - 3;
 		}
@@ -75,7 +74,7 @@ _speedrunStatsHandler = function(){
 		speedrun_stats.loadTimes[level - 1] += transitionTime;
 	}
 
-	var displaySpeedrunStats = function() {
+	var displaySpeedrunStats = function () {
 		$("#speedrun_time_stat").text(speedrun_stats.time ? getTimeWithFormat(parseFloat(speedrun_stats.time.toFixed(3))) : "---");
 		$("#loadless_time_stat").text(speedrun_stats.loadlessTime ? getTimeWithFormat(parseFloat(speedrun_stats.loadlessTime.toFixed(3))) : "---");
 
@@ -84,7 +83,7 @@ _speedrunStatsHandler = function(){
 		$("#total_teleports_stat").text(speedrun_stats.totalTeleports);
 
 		$("#extra_load_time_stat").text(speedrun_stats.extraLoadTime ? speedrun_stats.extraLoadTime.toFixed(3) : "---");
-		
+
 		for (var level = 1; level <= 15; level++) {
 			var currentLevelTime = speedrun_stats.levelTimes[level - 1];
 			var currentLevelLoadTime = speedrun_stats.loadTimes[level - 1];
@@ -93,35 +92,34 @@ _speedrunStatsHandler = function(){
 			if (!currentLevelTime) {
 				speedrun_stats.fake = true;
 				$levelTimeElement.text("---");
-			}
-			else{
+			} else {
 				$levelTimeElement.text(currentLevelTime.toFixed(2));
 			}
 
-			if (!currentLevelLoadTime || currentLevelLoadTime < 3) {
+			if (!currentLevelLoadTime || currentLevelLoadTime < 2.95) {
 				speedrun_stats.fake = true;
 			}
 		}
 
-		if (speedrun_stats.fake){
+		if (speedrun_stats.fake) {
 			$("#speedrun_stats").addClass("fake-speedrun");
 			$("#extra_speedrun_stats").addClass("fake-speedrun");
 			$("#speedrun_stats_title").text("Last FAKE speedrun");
-		}
-		else{
+		} else {
 			$("#speedrun_stats").removeClass("fake-speedrun");
 			$("#extra_speedrun_stats").removeClass("fake-speedrun");
 			$("#speedrun_stats_title").text("Last speedrun");
 		}
 	}
 
-  	return {
+	return {
 		onNewSpeedrun: onNewSpeedrun,
 		onSound: onSound,
 		onLevelEnd: onLevelEnd,
 		onTransitionEnd: onTransitionEnd,
-		getSpeedrunStats: function(){ return speedrun_stats; },
+		getSpeedrunStats: function () {
+			return speedrun_stats;
+		},
 		displaySpeedrunStats: displaySpeedrunStats
 	}
 }();
-
