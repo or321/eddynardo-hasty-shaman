@@ -14,7 +14,9 @@ _autosplitter = function () {
 		speedrunTime: null,
 		transitionTime: null,
 		show_speedrun_stats: false,
-		extra_speedrun_stats_visible: false
+		extra_speedrun_stats_visible: false,
+		force_restart_flag: false,
+		restart_flag_frame: 0
 	}
 
 	var moveToLevel = function (level) {
@@ -50,28 +52,16 @@ _autosplitter = function () {
 
 		// Specifically for Hasty Shaman:
 		// When starting a new game from the main menu, there is a random loading time which cause a mismatch between IGT 
-		// and the autosplitter timer. So in this case I force a level reset after a few milliseconds.
-		if (state.in_menu && state.level === 1) {
-			setTimeout(() => {
-				var e = jQuery.Event("keydown");
-				e.which = 82; // 'r' key
-				$(document).trigger(e);
-
-				var e = jQuery.Event("keyup");
-				e.which = 82; // 'r' key
-				$(document).trigger(e);
-			}, 150);
-		}
-
-
-
+		// and the autosplitter timer. So in this case I force a level reset after few frames after loading level 1.
+		state.force_restart_flag = (state.in_menu && state.level === 1);
+		state.restart_flag_frame = 0;
 
 		state.in_menu = sceneName === "Menu";
 		state.in_credits = sceneName === "End";
 		state.in_level = !state.in_menu && !state.in_credits
 		state.in_transition = false;
 
-		// I have no idea what this means, but when the condition index is 0 we, are in speedrun mode
+		// I have no idea what this means, but when the condition index is 0, we are in speedrun mode
 		state.speedrun_mode_active = (!state.in_menu && window.game.getCurrentEventStack().cndindex === 0);
 		onSpeedrunModeChanged();
 
@@ -139,6 +129,16 @@ _autosplitter = function () {
 		// Do nothing on the menu or credits
 		if (!state.in_level) return;
 
+		if (state.force_restart_flag) {
+			state.restart_flag_frame += 1;
+
+			if (state.restart_flag_frame >= 2) {
+				state.force_restart_flag = false;
+				restartLevel();
+			}
+		}
+
+
 		if (!state.in_transition) {
 			state.levelTime += frametime;
 			$("#level_timer").text(state.levelTime.toFixed(2));
@@ -153,6 +153,16 @@ _autosplitter = function () {
 				$("#transition_timer").text(state.transitionTime.toFixed(2));
 			}
 		}
+	}
+
+	var restartLevel = function () {
+		var e = jQuery.Event("keydown");
+		e.which = 82; // 'r' key
+		$(document).trigger(e);
+
+		e = jQuery.Event("keyup");
+		e.which = 82; // 'r' key
+		$(document).trigger(e);
 	}
 
 	/**********
