@@ -1,11 +1,9 @@
 _autosplitter = function () {
 	var chestsInLevel = [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 1, 2, 2];
-	var wrs = ["2.87", "3.60", "3.92", "4.93", "3.65", "2.65", "6.43", "4.87", "5.57", "6.10", "5.47", "4.25", "6.10", "6.72", "6.72"];
+	var wrs = ["2.87", "3.60", "3.92", "4.93", "3.65", "2.65", "6.43", "4.87", "5.57", "6.10", "5.47", "4.25", "6.10", "6.72", "6.68"];
 
 	var state = {
-		speedrun_mode_active: true,
-		currentFrameTime: null,
-		previousFrameTime: null,
+		speedrun_mode_active: false,
 		damselCount: 0,
 		level: NaN,
 		in_menu: true,
@@ -65,14 +63,21 @@ _autosplitter = function () {
 			}, 150);
 		}
 
-		if (state.level === 1) {
-			_speedrunStatsHandler.onNewSpeedrun();
-		}
+
+
 
 		state.in_menu = sceneName === "Menu";
 		state.in_credits = sceneName === "End";
 		state.in_level = !state.in_menu && !state.in_credits
 		state.in_transition = false;
+
+		// I have no idea what this means, but when the condition index is 0 we, are in speedrun mode
+		state.speedrun_mode_active = (!state.in_menu && window.game.getCurrentEventStack().cndindex === 0);
+		onSpeedrunModeChanged();
+
+		if (state.speedrun_mode_active && state.level === 1) {
+			_speedrunStatsHandler.onNewSpeedrun();
+		}
 
 		// Handle speedrun stats for the last level or transition (not on entering the first level)
 		if (state.speedrun_mode_active && (state.level > 1 || state.in_credits)) {
@@ -131,32 +136,20 @@ _autosplitter = function () {
 
 
 	var onUpdate = function (frametime) {
-		//state.previousFrameTime = state.currentFrameTime;
-		//state.currentFrameTime = time;
-
 		// Do nothing on the menu or credits
 		if (!state.in_level) return;
 
-		// Do nothing if the game is paused
-		if (window.game.isSuspended) {
-			return;
-		}
-
-		//currentFrameLength = (state.currentFrameTime - state.previousFrameTime) / 1000;
-
-
-		state.levelTime += frametime;
-		state.speedrunTime += frametime;
-		state.transitionTime += frametime;
-
 		if (!state.in_transition) {
+			state.levelTime += frametime;
 			$("#level_timer").text(state.levelTime.toFixed(2));
 		}
 
 		if (state.speedrun_mode_active) {
+			state.speedrunTime += frametime;
 			$("#speedrun_timer").text(state.speedrunTime.toFixed(2));
 
 			if (state.in_transition) {
+				state.transitionTime += frametime;
 				$("#transition_timer").text(state.transitionTime.toFixed(2));
 			}
 		}
@@ -193,19 +186,11 @@ _autosplitter = function () {
 	Speedrun mode handling
 	***********/
 
-	$("#btn_speedrun_mode").click(function () {
-		if (state.speedrun_mode_active) {
-			state.speedrun_mode_active = false;
-			$("#speedrun_mode_data").hide();
-			$("#practice_mode_data").show();
-			$("#btn_speedrun_mode").text("Speedrun mode: off");
-		} else {
-			state.speedrun_mode_active = true;
-			$("#speedrun_mode_data").show();
-			$("#practice_mode_data").hide();
-			$("#btn_speedrun_mode").text("Speedrun mode: on");
-		}
-	});
+	var onSpeedrunModeChanged = function () {
+		$("#speedrun_mode_data").toggle(state.speedrun_mode_active);
+		$("#practice_mode_data").toggle(!state.speedrun_mode_active);
+	}
+
 
 	/**********
 	Level movement handling
@@ -260,6 +245,3 @@ _autosplitter = function () {
 		}
 	};
 }();
-
-// Start with the game on the main menu
-_autosplitter.onScene("Menu");
