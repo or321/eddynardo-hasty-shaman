@@ -109,6 +109,10 @@ _speedrunStatsHandler = function () {
 			$("#speedrun_stats").removeClass("fake-speedrun");
 			$("#extra_speedrun_stats").removeClass("fake-speedrun");
 			$("#speedrun_stats_title").text("Last speedrun");
+
+			if (window.tas_mode_active) {
+				$("#speedrun_stats_title").text("TAS");
+			}
 		}
 	}
 

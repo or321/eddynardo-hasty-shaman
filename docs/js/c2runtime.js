@@ -4531,7 +4531,7 @@ quat4.str = function (a) {
 			window.scrollTo(0, 0);
 		}
 
-		// AUTOSPLITTER - on changing the canvas size
+		// AUTOSPLITTER 1 - on changing the canvas size
 		_autosplitter.onCanvasResize();
 	};
 	Runtime.prototype.tryLockOrientation = function () {
@@ -5343,10 +5343,6 @@ quat4.str = function (a) {
 			}
 		}
 		this.logic(raf_time);
-
-		// AUTOSPLITTER 1 - game loop top level - after calculating time in this frame
-		_autosplitter.onUpdate(this.dt);
-
 		if ((this.redraw || this.isCocoonJs) && !this.is_WebGL_context_lost && !this.suspendDrawing && !background_wake) {
 			this.redraw = false;
 			if (this.glwrap)
@@ -5399,6 +5395,10 @@ quat4.str = function (a) {
 		this.dt = this.dt1 * this.timescale;
 		this.kahanTime.add(this.dt);
 		this.wallTime.add(wallDt); // prevent min/max framerate affecting wall clock
+
+		// AUTOSPLITTER 2 - game loop top level - after calculating time in this frame
+		_autosplitter.onUpdate(this.dt);
+
 		var isfullscreen = (document["mozFullScreen"] || document["webkitIsFullScreen"] || document["fullScreen"] || !!document["msFullscreenElement"] || this.isNodeFullscreen) && !this.isCordova;
 		if (this.fullscreen_mode >= 2 /* scale */ || (isfullscreen && this.fullscreen_scaling > 0)) {
 			var orig_aspect = this.original_width / this.original_height;
@@ -5505,7 +5505,7 @@ quat4.str = function (a) {
 		}
 	};
 	Runtime.prototype.doChangeLayout = function (changeToLayout) {
-		// AUTOSPLITTER 2 - On starting a new level
+		// AUTOSPLITTER 3 - On starting a new level
 		_autosplitter.onScene(changeToLayout.name);
 
 		var prev_layout = this.running_layout;
@@ -16350,7 +16350,7 @@ cr.plugins_.Audio = function (runtime) {
 
 	function Acts() {};
 	Acts.prototype.Play = function (file, looping, vol, tag) {
-		// AUTOSPLITTER 3 - on playing a sound file
+		// AUTOSPLITTER 4 - on playing a sound file
 		_autosplitter.onSound(file[0]);
 
 		if (silent)
@@ -17706,16 +17706,27 @@ cr.plugins_.Keyboard = function (runtime) {
 	instanceProto.onCreate = function () {
 		var self = this;
 		if (!this.runtime.isDomFree) {
-			jQuery(document).keydown(
-				function (info) {
+			// TAS - hijacking keyboard inputs into the coffee script
+			if (window.tas_mode_active) {
+				window.coffee._keydown(function (info) {
 					self.onKeyDown(info);
-				}
-			);
-			jQuery(document).keyup(
-				function (info) {
+				});
+
+				window.coffee._keyup(function (info) {
 					self.onKeyUp(info);
-				}
-			);
+				});
+			} else {
+				jQuery(document).keydown(
+					function (info) {
+						self.onKeyDown(info);
+					}
+				);
+				jQuery(document).keyup(
+					function (info) {
+						self.onKeyUp(info);
+					}
+				);
+			}
 		}
 	};
 	var keysToBlockWhenFramed = [32, 33, 34, 35, 36, 37, 38, 39, 40, 44];
@@ -26385,6 +26396,7 @@ cr.behaviors.Platform = function (runtime) {
 			jQuery(document).keydown(function (info) {
 				self.onKeyDown(info);
 			});
+
 			jQuery(document).keyup(function (info) {
 				self.onKeyUp(info);
 			});

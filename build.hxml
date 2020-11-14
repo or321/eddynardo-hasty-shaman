@@ -1,3 +1,3 @@
 -main Main
--cp haxe_files/
--js ./coffee.js
+-cp tas_haxe_files/
+-js ./docs/js/tas/coffee.js

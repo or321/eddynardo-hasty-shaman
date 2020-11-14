@@ -20,7 +20,7 @@ class PlayControl {
 }
 
 class Engine {
-	var frameLength:Float = 1000.0/60.0; // Alternatively, use 16
+	var frameLength:Float = 1000.0 / 60.0; // Alternatively, use 16
 
 	var control = new PlayControl();
 	var playback:Option<Video.VideoPlayer> = None; // If this is initialized, we're in playback.
@@ -28,6 +28,7 @@ class Engine {
 	var slots:Array<Video>;
 
 	var fullgameVideo:Dynamic = null; // Special level-by-level videos for eddynardo.
+	var fullgameLevelCounter:Int = 0;
 
 	var pausedCallback:Option<Dynamic> = None;
 	var fakeTime:Float = 0;
@@ -35,44 +36,47 @@ class Engine {
 	var _requestAnimationFrame:Dynamic;
 	var _now:Dynamic;
 	var initialDirection = 0;
-
-	public function new() {
+    
+    public function new() {
 		// Inject our methods into the global scope.
 		_requestAnimationFrame = Browser.window.requestAnimationFrame;
 		_now = Browser.window.performance.now;
 		untyped window.requestAnimationFrame = this.requestAnimationFrame;
 		untyped window.performance.now = function() {
 			return fakeTime;
-		}
-		untyped window._keyup = this.keyup;
-		untyped window._keydown = this.keydown;
+        }
+        
+        // hook into the helper script
+        untyped window.coffee = {};
+        untyped window.coffee._onScene = onScene;
+    
+		untyped window.coffee._keyup = this.keyup;
+		untyped window.coffee._keydown = this.keydown;
 
 		// API for runners
 		untyped window.load = function(string:String) {
 			slots[0] = new Video(string);
 		}
-		untyped window.loadFullgame = function(string:String) {
-			fullgameVideo = Json.parse(string);
+		untyped window.coffee.loadFullGame = function(strings:Array<String>) {
+			fullgameVideo = strings.map(function(videoString) {
+				return new Video(videoString);
+			});
 		}
-		untyped window.clearFullgame = function(string:String) {
+		untyped window.coffee.clearFullGame = function(string:String) {
 			fullgameVideo = null;
 		}
-		untyped window.startLeft = function() {
+		untyped window.coffee.startLeft = function() {
 			initialDirection = 1;
 		}
-		untyped window.startRight = function() {
+		untyped window.coffee.startRight = function() {
 			initialDirection = 2;
 		}
-		untyped window.startNeutral = function() {
+		untyped window.coffee.startNeutral = function() {
 			initialDirection = 0;
 		}
-		untyped window.useFrame = function(fl) {
+		untyped window.coffee.useFrame = function(fl) {
 			frameLength = fl;
 		}
-
-		// hook into the helper script
-		untyped window.coffee = {};
-		untyped window.coffee.onScene = onScene;
 
 		fakeTime = _now();
 
@@ -103,13 +107,12 @@ class Engine {
 							control.silent = false;
 						} else {
 							// for fullgame playback, prime the initial direction controls
-							/*
-							if (fullgameLevelCounter >= 1 && fullgameLevelCounter < 15) {
-								initialDirection = fullgameVideo[fullgameLevelCounter].initialDirection;
+
+							if (fullgameLevelCounter >= 1 && fullgameLevelCounter <= 15) {
+								initialDirection = fullgameVideo[fullgameLevelCounter - 1].initialDirection;
 								control.frame = 0;
 								primeControls(true);
 							}
-							*/
 						}
 
 						playback = None;
@@ -315,10 +318,11 @@ class Engine {
 		return false;
 	}
 
-	function onScene(name:String) {
-		trace('[SCENE ${name}]');
-		if ((fullgameVideo != null) && Reflect.field(fullgameVideo, name) != null) {
-			loadPlayback(new Video(Reflect.field(fullgameVideo, name)));
+	function onScene(levelNum:Int) {
+		trace('[SCENE ${levelNum}]');
+		if (fullgameVideo != null && fullgameVideo.length >= levelNum) {
+			fullgameLevelCounter = levelNum;
+			loadPlayback(fullgameVideo[fullgameLevelCounter - 1]);
 			control.paused = false;
 			control.frame = 0;
 			control.speed = 1;

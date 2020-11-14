@@ -1,6 +1,6 @@
 _autosplitter = function () {
 	var chestsInLevel = [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 1, 2, 2];
-	var wrs = ["2.87", "3.60", "3.90", "4.93", "3.65", "2.65", "6.43", "4.87", "5.57", "6.10", "5.47", "4.22", "6.10", "6.72", "6.67"];
+	var wrs = ["2.86", "3.60", "3.90", "4.93", "3.65", "2.65", "6.42", "4.87", "5.57", "6.10", "5.28", "4.22", "6.10", "6.56", "6.38"];
 
 	var state = {
 		speedrun_mode_active: false,
@@ -62,11 +62,13 @@ _autosplitter = function () {
 		state.in_transition = false;
 
 		// I have no idea what this means, but when the condition index is 0, we are in speedrun mode
-		state.speedrun_mode_active = (!state.in_menu && window.game.getCurrentEventStack().cndindex === 0);
-		onSpeedrunModeChanged();
-
-		if (state.speedrun_mode_active && state.level === 1) {
+		if (state.level === 1 && window.game.getCurrentEventStack().cndindex === 0) {
+			state.speedrun_mode_active = true;
+			onSpeedrunModeChanged();
 			_speedrunStatsHandler.onNewSpeedrun();
+		} else if (state.in_menu) {
+			state.speedrun_mode_active = false;
+			onSpeedrunModeChanged();
 		}
 
 		// Handle speedrun stats for the last level or transition (not on entering the first level)
@@ -122,6 +124,11 @@ _autosplitter = function () {
 		if (state.in_level) {
 			hideExtraStats();
 		}
+
+		// Handling TAS mode
+		if (window.tas_mode_active && state.in_level) {
+			window.coffee._onScene(state.level);
+		}
 	}
 
 
@@ -130,14 +137,10 @@ _autosplitter = function () {
 		if (!state.in_level) return;
 
 		if (state.force_restart_flag) {
-			state.restart_flag_frame += 1;
-
-			if (state.restart_flag_frame >= 2) {
-				state.force_restart_flag = false;
-				restartLevel();
-			}
+			state.force_restart_flag = false;
+			restartLevel();
+			return;
 		}
-
 
 		if (!state.in_transition) {
 			state.levelTime += frametime;
