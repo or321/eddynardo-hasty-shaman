@@ -20,7 +20,7 @@ class Main {
 		infoTrace("Ctrl + [0-9] to save video in the respective slot.");
 		infoTrace("Alt + [0-9] to play back video in the respective slot, pausing on frame 1.");
 		infoTrace("[p] to reset and play the video in slot 0 in normal speed.");
-		infoTrace("`coffee.useFrame(float)` to change framerate (default is 60 fps).");
+		infoTrace("`coffee.useFrame(float)` to change frame length (in milliseconds). Default is 1000/60.");
 		infoTrace("`coffee.load(string)` to load a video into slot 0.");
 		infoTrace("`coffee.startLeft()` / `coffee.StartRight()` / `coffee.StartNeutral()` - configure the inputs on frame 0 of a level.");
 		infoTrace("`coffee.loadFullGame(array<string>)` to play a full game of several levels. Parameter is array of video codes.");

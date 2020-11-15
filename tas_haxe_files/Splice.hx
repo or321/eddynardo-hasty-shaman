@@ -8,7 +8,7 @@ class Splice {
 	}
 
 	public static function spliceILs(videos:Array<Video>):Video {
-        var levelTransitionDelay = 99
+        var levelTransitionDelay = 99;
 		var spliced = new Video();
 		var levelDelay = 0;
 		var lastFrame = 0;
