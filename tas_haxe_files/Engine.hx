@@ -36,25 +36,25 @@ class Engine {
 	var _requestAnimationFrame:Dynamic;
 	var _now:Dynamic;
 	var initialDirection = 0;
-    
-    public function new() {
+
+	public function new() {
 		// Inject our methods into the global scope.
 		_requestAnimationFrame = Browser.window.requestAnimationFrame;
 		_now = Browser.window.performance.now;
 		untyped window.requestAnimationFrame = this.requestAnimationFrame;
 		untyped window.performance.now = function() {
 			return fakeTime;
-        }
-        
-        // hook into the helper script
-        untyped window.coffee = {};
-        untyped window.coffee._onScene = onScene;
-    
+		}
+
+		// hook into the helper script
+		untyped window.coffee = {};
+		untyped window.coffee._onScene = onScene;
+
 		untyped window.coffee._keyup = this.keyup;
 		untyped window.coffee._keydown = this.keydown;
 
 		// API for runners
-		untyped window.load = function(string:String) {
+		untyped window.coffee.load = function(string:String) {
 			slots[0] = new Video(string);
 		}
 		untyped window.coffee.loadFullGame = function(strings:Array<String>) {
@@ -173,11 +173,11 @@ class Engine {
 	function onKey(event:Dynamic, down:Bool) {
 		if (!Util.isSome(playback)) {
 			// We're not in playback, so we should pass through keys.
-			// var suppress = [83, 87, 65, 68, 82]; // alternate movement keys and `r`
-			if (Video.keyCodes.indexOf(event.keyCode) != -1)
+			var suppress = [83, 87, 65, 68, 82]; // prevent pressing alternate movement keys and 'r'
+			if (suppress.indexOf(event.keyCode) == -1)
 				sendGameInput(event.keyCode, down);
 		}
-		if (down) {
+		if (down && fullgameVideo == null) {
 			switch (KeyBindings.fromKeyCode(event.keyCode)) {
 				case Some(input):
 					if (handleInterfaceInput(input, event.ctrlKey, event.altKey)) {
@@ -286,7 +286,16 @@ class Engine {
 			control.pause();
 			triggerPausedCallback();
 			return true;
-		}
+        }
+        
+        // p to replay the video in slot 0 at normal speed
+        if (input == CoffeeInput.Replay) {
+            loadPlayback(slots[0]);
+            resetLevel(0, true);
+            control.speed = 1;
+            triggerPausedCallback();
+			return true;
+        }
 
 		// handling slots
 		switch (input) {
