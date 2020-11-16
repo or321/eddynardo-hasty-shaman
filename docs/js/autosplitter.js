@@ -253,12 +253,13 @@ _autosplitter = function () {
 	/**********
 	Handling FPS counter - show or hide with Ctrl+B combination
 	***********/
-
+	/*
 	$(document).keypress(function (e) {
 		if (e.ctrlKey && e.keyCode == 2) {
 			$("#fps_counter").toggle();
 		}
 	});
+	*/
 
 
 	/**********
