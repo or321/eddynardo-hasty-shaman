@@ -51,8 +51,10 @@
 		</div>
 
 		<div id="practice_mode_data" style="display: none;">
-			<span id="level_select_message" style="font-size: 30px;">Press '+' or '-' to move between levels</span>
+			<span id="level_select_message">Press '+' or '-' to move between levels</span>
 		</div>
+
+		<div id="fps_counter" class="fps-counter" style="display: none;">FPS</div>
 	</div>
 
 	<div class="speedrun-stats-modal" id="speedrun_stats">
@@ -188,6 +190,12 @@
 	<script src="js/c2runtime.js"></script>
 
 	<script src="js/c2webappstart.js"></script>
+
+	<script lang="javascript">
+		$(document).ready(function () {
+			//window.game.minimumFramerate = 60;
+		});
+	</script>
 
 </body>
 

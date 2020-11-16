@@ -151,7 +151,11 @@ _autosplitter = function () {
 	The "frameTime" parameter is the time (in milliseconds) that elapsed since the last tick.
 	*/
 	var onUpdate = function (frameTime) {
-		// Do nothing on the menu or credits
+		// Update the FPS counter for the current frame
+		$("#fps_counter").text((1 / frameTime).toFixed());
+
+
+		// Do nothing else on the menu or credits
 		if (!state.in_level) return;
 
 		// Checking the flag for determining the current game mode
@@ -243,7 +247,18 @@ _autosplitter = function () {
 		if (e.which == 45 && state.level > 1) {
 			moveToLevel(state.level - 1);
 		}
-	})
+	});
+
+
+	/**********
+	Handling FPS counter - show or hide with Ctrl+B combination
+	***********/
+
+	$(document).keypress(function (e) {
+		if (e.ctrlKey && e.keyCode == 2) {
+			$("#fps_counter").toggle();
+		}
+	});
 
 
 	/**********

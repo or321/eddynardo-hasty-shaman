@@ -135,3 +135,9 @@ canvas {
     width: 200px;
     text-decoration: underline;
 }
+
+
+.fps-counter {
+    float: right;
+    margin-right: 10px;
+}
