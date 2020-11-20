@@ -96,7 +96,7 @@ _speedrunStatsHandler = function () {
 				$levelTimeElement.text(currentLevelTime.toFixed(2));
 			}
 
-			if (!currentLevelLoadTime || currentLevelLoadTime < 2.95) {
+			if (!currentLevelLoadTime || currentLevelLoadTime < 2.98) {
 				speedrun_stats.fake = true;
 			}
 		}

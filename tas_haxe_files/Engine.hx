@@ -20,7 +20,7 @@ class PlayControl {
 }
 
 class Engine {
-	var frameLength:Float = 1000.0 / 60.0; // Alternatively, use 16
+	var frameLength:Float = 1000.0 / 60.0;
 
 	var control = new PlayControl();
 	var playback:Option<Video.VideoPlayer> = None; // If this is initialized, we're in playback.
@@ -286,16 +286,16 @@ class Engine {
 			control.pause();
 			triggerPausedCallback();
 			return true;
-        }
-        
-        // p to replay the video in slot 0 at normal speed
-        if (input == CoffeeInput.Replay) {
-            loadPlayback(slots[0]);
-            resetLevel(0, true);
-            control.speed = 1;
-            triggerPausedCallback();
+		}
+
+		// p to replay the video in slot 0 at normal speed
+		if (input == CoffeeInput.Replay) {
+			loadPlayback(slots[0]);
+			resetLevel(0, true);
+			control.speed = 1;
+			triggerPausedCallback();
 			return true;
-        }
+		}
 
 		// handling slots
 		switch (input) {

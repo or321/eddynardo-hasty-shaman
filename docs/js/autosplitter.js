@@ -249,6 +249,24 @@ _autosplitter = function () {
 		}
 	});
 
+	/**********
+	Handling alternate keyboard inputs
+	***********/
+
+	$(document).keypress(function (e) {
+		// Detect press on "C"
+		if (e.which == 67 || e.which == 99) {
+			// Press on J instead
+			var downEvent = jQuery.Event("keydown");
+			downEvent.which = 74;
+			$(document).trigger(downEvent);
+
+			var upEvent = jQuery.Event("keyup");
+			upEvent.which = 74;
+			$(document).trigger(upEvent);
+		}
+	});
+
 
 	/**********
 	Handling FPS counter - show or hide with Ctrl+B combination
