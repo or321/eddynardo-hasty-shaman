@@ -16,8 +16,7 @@ _autosplitter = function () {
 		speedrunTime: null,
 		transitionTime: null,
 		show_speedrun_stats: false,
-		extra_speedrun_stats_visible: false,
-		checkForSpeedrun_flag: false
+		extra_speedrun_stats_visible: false
 	}
 
 	/*
@@ -25,6 +24,11 @@ _autosplitter = function () {
 	*/
 	var moveToLevel = function (level) {
 		window.game.doChangeLayout(window.game.layouts_by_index[level + 2]);
+	}
+
+	var isInSpeedrun = function () {
+		var speedrunning_var = window.game.all_global_vars.find(obj => obj.name === "IsSpeedRunning");
+		return !!speedrunning_var && speedrunning_var.data == "true";
 	}
 
 	/*
@@ -64,12 +68,6 @@ _autosplitter = function () {
 
 		state.level = parseInt(sceneName.slice(5, 10));
 
-		/*
-		When opening the first level from the main menu, we need to determine if we are in practice mode or speedrun mode.
-		This check can't happen on frame-zero of the level, so a flag is set for checking game mode in the next timer tick.
-		*/
-		state.checkForSpeedrun_flag = (state.in_menu && state.level === 1);
-
 		// Check where we are now, based on the new layout name
 		state.in_menu = (sceneName === "Menu");
 		state.in_credits = (sceneName === "End");
@@ -102,15 +100,19 @@ _autosplitter = function () {
 			if (state.in_menu) {
 				$("#speedrun_timer").text("---");
 				$("#transition_timer").text("---");
-
-				// Entering the menu always disable speedrun mode.
-				state.speedrun_mode_active = false;
-				onSpeedrunModeChanged();
 			}
 		}
 
+		state.speedrun_mode_active = (!state.in_menu && isInSpeedrun());
+		onSpeedrunModeChanged();
+
 		// Handling speedrun stats tracking, in case we are in speedrun mode
 		if (state.speedrun_mode_active) {
+			// Always start tracking a new speedrun on level 1
+			if (state.level === 1) {
+				_speedrunStatsHandler.onNewSpeedrun();
+			}
+
 			// Checking if a new level was loaded, or the player reached the credits screen.
 			// The first level is ignored, because it will always start a new speedrun.
 			if (state.level > 1 || state.in_credits) {
@@ -155,25 +157,8 @@ _autosplitter = function () {
 		$("#fps_counter").text((1 / frameTime).toFixed());
 
 
-		// Do nothing else on the menu or credits
+		// Don't update timers on the menu or credits
 		if (!state.in_level) return;
-
-		// Checking the flag for determining the current game mode
-		if (state.checkForSpeedrun_flag) {
-			state.checkForSpeedrun_flag = false;
-
-			/*
-			We want to check for speedrun/practice mode only on the first level.
-			I don't know what "getCurrentEvenStack().cndindex" means in the context of the game, 
-			but we are in speedrun mode only if the index is 0.
-			This index isn't equal to 0 on the first frame of level 1, that's why we are checking for it here instead of the onScene function.
-			*/
-			if (state.level === 1 && window.game.getCurrentEventStack().cndindex === 0) {
-				state.speedrun_mode_active = true;
-				onSpeedrunModeChanged();
-				_speedrunStatsHandler.onNewSpeedrun();
-			}
-		}
 
 		// Update the level timer for the current frame if we are not in transition
 		if (!state.in_transition) {
