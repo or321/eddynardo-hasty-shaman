@@ -141,3 +141,24 @@ canvas {
     float: right;
     margin-right: 10px;
 }
+
+
+.music-volume-message {
+    /* Hidden by default */
+    display: none;
+
+    position: fixed;
+    z-index: 1;
+
+    width: 230px;
+    min-height: 30px;
+
+    padding: 5px;
+
+    background-color: #212121dd;
+    border: 1px solid black;
+
+    font-weight: bold;
+    font-size: 27px;
+    text-align: center;
+}

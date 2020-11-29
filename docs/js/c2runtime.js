@@ -16351,7 +16351,11 @@ cr.plugins_.Audio = function (runtime) {
 	function Acts() {};
 	Acts.prototype.Play = function (file, looping, vol, tag) {
 		// AUTOSPLITTER 4 - on playing a sound file
-		_autosplitter.onSound(file[0]);
+		var soundName = file[0];
+		_autosplitter.onSound(soundName);
+
+		if (soundName.indexOf("rolemusic") >= 0 && _volumeHandler.isMusicSilent())
+			return;
 
 		if (silent)
 			return;

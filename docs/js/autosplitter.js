@@ -203,6 +203,10 @@ _autosplitter = function () {
 		$("#extra_speedrun_stats")
 			.css("right", (canvas_marginLeft + 320) + "px")
 			.css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px");
+
+		$("#div_music_volume")
+			.css("right", canvas_marginLeft + "px")
+			.css("top", canvas_marginTop + "px");
 	}
 
 	/**********
@@ -251,18 +255,6 @@ _autosplitter = function () {
 			$(document).trigger(upEvent);
 		}
 	});
-
-
-	/**********
-	Handling FPS counter - show or hide with Ctrl+B combination
-	***********/
-	/*
-	$(document).keypress(function (e) {
-		if (e.ctrlKey && e.keyCode == 2) {
-			$("#fps_counter").toggle();
-		}
-	});
-	*/
 
 
 	/**********
