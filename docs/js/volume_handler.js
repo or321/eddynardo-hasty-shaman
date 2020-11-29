@@ -4,6 +4,10 @@ _volumeHandler = function () {
 		timeout_id: null
 	};
 
+	/*
+	Set 'N' as a hotkey to mute/unmute only the background music file, while keeping the sound effects active.
+	"state.musicSilent" is used in the game code to decide if to play the music file or not.
+	*/
 	$(document).keypress(function (e) {
 		// Detect press on "N"
 		if (e.which == 78 || e.which == 110) {
