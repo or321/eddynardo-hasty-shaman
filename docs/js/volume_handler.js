@@ -30,13 +30,24 @@ _volumeHandler = function () {
 
 			// Press on M twice - this will keep the volume settings as they are now, but will trigger playing the music file
 			for (var i = 1; i <= 2; i++) {
-				var downEvent = jQuery.Event("keydown");
-				downEvent.which = 77;
-				$(document).trigger(downEvent);
+				// In TAS mode, simulate 'M' press without jquery
+				if (window.tas_mode_active) {
+					window.dispatchEvent(new KeyboardEvent('keydown', {
+						'keyCode': 77
+					}));
 
-				var upEvent = jQuery.Event("keyup");
-				upEvent.which = 77;
-				$(document).trigger(upEvent);
+					window.dispatchEvent(new KeyboardEvent('keyup', {
+						'keyCode': 77
+					}));
+				} else {
+					var downEvent = jQuery.Event("keydown");
+					downEvent.which = 77;
+					$(document).trigger(downEvent);
+
+					var upEvent = jQuery.Event("keyup");
+					upEvent.which = 77;
+					$(document).trigger(upEvent);
+				}
 			}
 		}
 	});
