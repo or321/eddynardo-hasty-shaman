@@ -242,14 +242,20 @@ _autosplitter = function () {
 	Handling alternate keyboard inputs
 	***********/
 
-	$(document).keypress(function (e) {
+	$(document).keydown(function (e) {
 		// Detect press on "C"
 		if (e.which == 67 || e.which == 99) {
 			// Press on J instead
 			var downEvent = jQuery.Event("keydown");
 			downEvent.which = 74;
 			$(document).trigger(downEvent);
+		}
+	});
 
+	$(document).keyup(function (e) {
+		// Detect press on "C"
+		if (e.which == 67 || e.which == 99) {
+			// Press on J instead
 			var upEvent = jQuery.Event("keyup");
 			upEvent.which = 74;
 			$(document).trigger(upEvent);
