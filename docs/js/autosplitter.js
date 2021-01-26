@@ -192,21 +192,30 @@ _autosplitter = function () {
 		$("#autosplitter_data")
 			.width(canvas_w - 10)
 			.css("left", canvas_marginLeft + "px")
-			.css("bottom", canvas_marginTop + "px");
+			.css("bottom", canvas_marginTop + "px")
+			.fitText(4);
 
 		var autosplitter_bar_height = $("#autosplitter_data").height();
 
 		$("#speedrun_stats")
 			.css("right", (canvas_marginLeft + 1) + "px")
-			.css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px");
+			.css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px")
+			.width(canvas_w * (1 / 6))
+			.fitText(1.25);
+
+		var speedrun_stats_modal_width = $("#speedrun_stats").width();
 
 		$("#extra_speedrun_stats")
-			.css("right", (canvas_marginLeft + 320) + "px")
-			.css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px");
+			.css("right", (canvas_marginLeft + speedrun_stats_modal_width + 3) + "px")
+			.css("bottom", (canvas_marginTop + autosplitter_bar_height + 10) + "px")
+			.width(canvas_w * (1 / 2))
+			.fitText(3);
 
 		$("#div_music_volume")
 			.css("right", canvas_marginLeft + "px")
-			.css("top", canvas_marginTop + "px");
+			.css("top", canvas_marginTop + "px")
+			.width(canvas_w * (12 / 100))
+			.fitText(0.8);
 	}
 
 	/**********
@@ -244,7 +253,7 @@ _autosplitter = function () {
 
 	$(document).keydown(function (e) {
 		// Detect press on "C"
-		if (e.which == 67 || e.which == 99) {
+		if (e.which == 67) {
 			// Press on J instead
 			var downEvent = jQuery.Event("keydown");
 			downEvent.which = 74;
@@ -254,7 +263,7 @@ _autosplitter = function () {
 
 	$(document).keyup(function (e) {
 		// Detect press on "C"
-		if (e.which == 67 || e.which == 99) {
+		if (e.which == 67) {
 			// Press on J instead
 			var upEvent = jQuery.Event("keyup");
 			upEvent.which = 74;

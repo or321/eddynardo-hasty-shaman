@@ -58,7 +58,7 @@
 
     <div class="speedrun-stats-modal" id="speedrun_stats">
 
-        <table class="speedrun-stats-table" cellpadding="5" cellspacing="5">
+        <table class="speedrun-stats-table" cellpadding="5" cellspacing="10">
             <tr>
                 <td colspan="2" class="speedrun-stats-title" id="speedrun_stats_title">Last speedrun</td>
             </tr>
@@ -72,8 +72,9 @@
             </tr>
         </table>
 
-        <button class="extra-stats-button" id="btn_extra_stats"><span id="extra_stats_button_arrow">&lt;</span> Extra
-            stats</button>
+        <div class="extra-stats-button" id="btn_extra_stats">
+            <span id="extra_stats_button_arrow">&lt;</span> Extra stats
+        </div>
     </div>
 
     <div class="extra-speedrun-stats-modal" id="extra_speedrun_stats">
@@ -183,6 +184,7 @@
     <!-- Pages load faster with scripts at the bottom -->
 
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
 
     <script lang="javascript">
         window.tas_mode_active = true;
