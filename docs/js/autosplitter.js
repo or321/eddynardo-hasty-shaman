@@ -1,6 +1,5 @@
 _autosplitter = function () {
 	var chestsInLevel = [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 1, 2, 2];
-	var wrs = ["2.85", "3.60", "3.87", "4.90", "3.63", "2.63", "6.37", "4.83", "5.35", "5.77", "5.25", "4.18", "6.05", "6.53", "6.32"];
 
 	var decimal_places_display = (window.tas_mode_active ? 3 : 2);
 
@@ -81,7 +80,10 @@ _autosplitter = function () {
 			// Set relevant data for the current level
 			state.levelTime = 0;
 			document.getElementById("level_timer").innerText = (0).toFixed(decimal_places_display);
-			document.getElementById("level_wr").innerText = wrs[state.level - 1];
+			
+			wrTimes = _wrs.getTimes();
+			$("#level_wr_title").text(wrTimes.title);
+			$("#level_wr").text(wrTimes.wrs[state.level - 1]);
 
 			$("#level_select_message").css("visibility", "visible");
 
