@@ -1,0 +1,42 @@
+{
+	"scale": 1,
+	"player": {
+		"positionX": 100,
+		"positionY": 30
+	},
+	"bats": [		
+	],
+	"ghosts": [
+	],
+	"fires": [
+	],
+	"spikes": [
+	],
+	"chests": [
+		{
+			"positionX": 40,
+			"positionY": 50
+		},
+		{
+			"positionX": 140,
+			"positionY": 200
+		}
+	],
+	"wall_blocks": [
+		{
+			"positionX": 50,
+			"positionY": 30,
+			"width": 100,
+			"height": 20
+		}
+	],
+	"grey_blocks": [
+	],
+	"yellow_blocks": [
+	],
+	"purple_blocks": [
+	],
+	
+	"textures": {
+	}
+}
