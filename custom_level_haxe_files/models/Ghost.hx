@@ -7,7 +7,7 @@ class Ghost {
 	public function new() {}
 
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():dynamic {
+	public function ToLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

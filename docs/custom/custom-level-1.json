@@ -1,4 +1,5 @@
 {
+	"name": "CustomLevel1",
 	"scale": 1,
 	"player": {
 		"positionX": 100,
@@ -36,7 +37,18 @@
 	],
 	"purple_blocks": [
 	],
-	
 	"textures": {
+	},
+	"dynamicLevelText": {
+		"value": "Press X or J to pass through the ground",
+		"width": 216,
+		"height": 40
+	},
+	"staticLevelText": {
+		"value": "test",
+		"positionX": 0,
+		"positionY": 6,
+		"width": 320,
+		"height": 16
 	}
 }

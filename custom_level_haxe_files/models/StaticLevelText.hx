@@ -1,9 +1,10 @@
-class WallBlock {
+class StaticLevelText {
+	public var value:String;
+
 	public var positionX:Int;
 	public var positionY:Int;
-
 	public var width:Int;
-	public var height:Int = 8;
+	public var height:Int;
 
 	public function new() {}
 
@@ -15,21 +16,34 @@ class WallBlock {
 				this.positionY, 
 				0, 
 				this.width, 
-				this.height, 
+				this.height,
 				0, 
 				0, 
-				0.5, 
+				1, 
 				0, 
 				0, 
 				0, 
 				0, 
 				[]
 			], 
-			50, 
-			1150, 
+			14, 
+			46, 
 			[], 
 			[], 
-			[1, "Default", 0, 1]
+			[
+				16, 
+				16, 
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>", 
+				this.value, 
+				0.5, 
+				0, 
+				1, 
+				0, 
+				0, 
+				0, 
+				0, 
+				0
+			]
 		];
 	}
 }

@@ -7,7 +7,7 @@ class WallBlock {
 
 	public function new() {}
 
-	public function ToLayoutComponent():dynamic {
+	public function ToLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 
