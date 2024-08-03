@@ -1,13 +1,13 @@
 class WallBlock {
-    public var positionX:Int;
-    public var positionY:Int;
+	public var positionX:Int;
+	public var positionY:Int;
 
-    public var width:Int;
+	public var width:Int;
 	public var height:Int;
 
-    public function new() {}
+	public function new() {}
 
-    public function ToLayoutComponent():dynamic {
+	public function ToLayoutComponent():dynamic {
 		return [
 			[
 				this.positionX, 
@@ -30,5 +30,5 @@ class WallBlock {
 			[[1]], 
 			[0, "Default", 0, 1]
 		];
-    }
+	}
 }

@@ -1,14 +1,14 @@
 class Spike {
-    public var positionX:Int;
-    public var positionY:Int;
-    public var width:Int = 13;
-    public var height:Int = 11;
+	public var positionX:Int;
+	public var positionY:Int;
+	public var width:Int = 13;
+	public var height:Int = 11;
 
 	public var direction:Direction = Direction.Up;
 
-    public function new() {}
+	public function new() {}
 
-    public function ToLayoutComponent():dynamic {
+	public function ToLayoutComponent():dynamic {
 		return [
 			[
 				this.positionX, 
@@ -31,5 +31,5 @@ class Spike {
 			[], 
 			[0, "Default", 0, 1]
 		];
-    }
+	}
 }
