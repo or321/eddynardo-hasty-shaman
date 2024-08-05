@@ -6,8 +6,26 @@ class Bat {
 
 	public function new() {}
 
+	public static function copy(bat:Bat):Bat {
+		var newBat:Bat = new Bat();
+
+		if (bat.positionX != null)
+			newBat.positionX = bat.positionX;
+
+		if (bat.positionY != null)
+			newBat.positionY = bat.positionY;
+
+		if (bat.width != null)
+			newBat.width = bat.width;
+
+		if (bat.height != null)
+			newBat.height = bat.height;
+
+		return newBat;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

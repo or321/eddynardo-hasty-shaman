@@ -6,8 +6,26 @@ class Ghost {
 
 	public function new() {}
 
+	public static function copy(ghost:Ghost):Ghost {
+		var newGhost:Ghost = new Ghost();
+
+		if (ghost.positionX != null)
+			newGhost.positionX = ghost.positionX;
+
+		if (ghost.positionY != null)
+			newGhost.positionY = ghost.positionY;
+
+		if (ghost.width != null)
+			newGhost.width = ghost.width;
+
+		if (ghost.height != null)
+			newGhost.height = ghost.height;
+
+		return newGhost;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

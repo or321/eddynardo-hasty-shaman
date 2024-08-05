@@ -1,4 +1,4 @@
-class WallBlock {
+class YellowBlock {
 	public var positionX:Int;
 	public var positionY:Int;
 
@@ -7,7 +7,19 @@ class WallBlock {
 
 	public function new() {}
 
-	public function ToLayoutComponent():Dynamic {
+	public static function copy(block:YellowBlock):YellowBlock {
+		var newBlock:YellowBlock = new YellowBlock();
+		newBlock.positionX = block.positionX;
+		newBlock.positionY = block.positionY;
+		newBlock.width = block.width;
+
+		if (block.height != null)
+			newBlock.height = block.height;
+
+		return newBlock;
+	}
+
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

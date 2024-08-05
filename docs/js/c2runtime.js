@@ -7782,7 +7782,11 @@ window["cr_setSuspended"] = function (s) {
 			});
 			this.effect_params.push(m[8][i][2].slice(0));
 		}
-		this.updateActiveEffects();
+		if (this.updateActiveEffects)
+			this.updateActiveEffects();
+		else if (this.prototype && this.prototype.updateActiveEffects)
+			this.prototype.updateActiveEffects();
+
 		this.rcTex = new cr.rect(0, 0, 1, 1);
 		this.rcTex2 = new cr.rect(0, 0, 1, 1);
 		this.persist_data = {};

@@ -8,8 +8,19 @@ class StaticLevelText {
 
 	public function new() {}
 
+	public static function copy(text:StaticLevelText):StaticLevelText {
+		var newText:StaticLevelText = new StaticLevelText();
+		newText.value = text.value;
+		newText.positionX = text.positionX;
+		newText.positionY = text.positionY;
+		newText.width = text.width;
+		newText.height = text.height;
+		
+		return newText;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

@@ -1,4 +1,4 @@
-class WallBlock {
+class GreyBlock {
 	public var positionX:Int;
 	public var positionY:Int;
 
@@ -7,8 +7,20 @@ class WallBlock {
 
 	public function new() {}
 
+	public static function copy(block:GreyBlock):GreyBlock {
+		var newBlock:GreyBlock = new GreyBlock();
+		newBlock.positionX = block.positionX;
+		newBlock.positionY = block.positionY;
+		newBlock.width = block.width;
+
+		if (block.height != null)
+			newBlock.height = block.height;
+
+		return newBlock;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

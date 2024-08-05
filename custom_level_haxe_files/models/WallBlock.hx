@@ -7,7 +7,17 @@ class WallBlock {
 
 	public function new() {}
 
-	public function ToLayoutComponent():Dynamic {
+	public static function copy(block:WallBlock):WallBlock {
+		var newBlock:WallBlock = new WallBlock();
+		newBlock.positionX = block.positionX;
+		newBlock.positionY = block.positionY;
+		newBlock.width = block.width;
+		newBlock.height = block.height;
+
+		return newBlock;
+	}
+
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

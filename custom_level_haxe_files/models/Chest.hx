@@ -7,8 +7,26 @@ class Chest {
 
 	public function new() {}
 
+	public static function copy(chest:Chest):Chest {
+		var newChest:Chest = new Chest();
+
+		if (chest.positionX != null)
+			newChest.positionX = chest.positionX;
+
+		if (chest.positionY != null)
+			newChest.positionY = chest.positionY;
+
+		if (chest.width != null)
+			newChest.width = chest.width;
+
+		if (chest.height != null)
+			newChest.height = chest.height;
+
+		return newChest;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

@@ -6,8 +6,26 @@ class Fire {
 
 	public function new() {}
 
+	public static function copy(fire:Fire):Fire {
+		var newFire:Fire = new Fire();
+
+		if (fire.positionX != null)
+			newFire.positionX = fire.positionX;
+
+		if (fire.positionY != null)
+			newFire.positionY = fire.positionY;
+
+		if (fire.width != null)
+			newFire.width = fire.width;
+
+		if (fire.height != null)
+			newFire.height = fire.height;
+
+		return newFire;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

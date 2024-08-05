@@ -1,3 +1,10 @@
+-main Level
+-cp custom_level_haxe_files/enums
+-cp custom_level_haxe_files/models
+-js ./docs/js/custom_levels/custom_levels.js
+
+--next
+
 -main Main
 -cp tas_haxe_files/
 -js ./docs/js/tas/coffee.js

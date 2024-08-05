@@ -94,8 +94,8 @@ _autosplitter = function () {
 			}
 		} else {
 			// Hide info/timers if we entered the menu or credits
-			document.getElementById("level_timer").innerText = "---";
-			document.getElementById("level_wr").innerText = "---";
+			$("#level_timer").text("---");
+			$("#level_wr").text("---");
 
 			$("#level_select_message").css("visibility", "hidden");
 

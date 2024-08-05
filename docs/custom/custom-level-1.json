@@ -5,30 +5,48 @@
 		"positionX": 100,
 		"positionY": 30
 	},
-	"bats": [		
+	"bats": [
+		{
+			"positionX": 100,
+			"positionY": 100
+		}
 	],
 	"ghosts": [
+		{
+			"positionX": 110,
+			"positionY": 110
+		}
 	],
 	"fires": [
+		{
+			"positionX": 120,
+			"positionY": 120
+		}
 	],
 	"spikes": [
+		{
+			"positionX": 130,
+			"positionY": 130
+		}
 	],
 	"chests": [
 		{
 			"positionX": 40,
-			"positionY": 50
-		},
-		{
-			"positionX": 140,
-			"positionY": 200
+			"positionY": 100
 		}
 	],
 	"wall_blocks": [
 		{
-			"positionX": 50,
-			"positionY": 30,
-			"width": 100,
+			"positionX": 0,
+			"positionY": 180,
+			"width": 320,
 			"height": 20
+		},
+		{
+			"positionX": 160,
+			"positionY": 90,
+			"width": 30,
+			"height": 30
 		}
 	],
 	"grey_blocks": [
@@ -45,7 +63,7 @@
 		"height": 40
 	},
 	"staticLevelText": {
-		"value": "test",
+		"value": "My first level (o_o)",
 		"positionX": 0,
 		"positionY": 6,
 		"width": 320,

@@ -1,3 +1,5 @@
+import Direction;
+
 class Spike {
 	public var positionX:Int;
 	public var positionY:Int;
@@ -6,9 +8,30 @@ class Spike {
 
 	public var direction:Direction = Direction.Up;
 
+	public static function copy(spike:Spike):Spike {
+		var newSpike:Spike = new Spike();
+
+		if (spike.positionX != null)
+			newSpike.positionX = spike.positionX;
+
+		if (spike.positionY != null)
+			newSpike.positionY = spike.positionY;
+
+		if (spike.width != null)
+			newSpike.width = spike.width;
+
+		if (spike.height != null)
+			newSpike.height = spike.height;
+
+		if (spike.direction != null)
+			newSpike.direction = spike.direction;
+
+		return newSpike;
+	}
+
 	public function new() {}
 
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 

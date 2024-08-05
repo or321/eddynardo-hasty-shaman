@@ -1,3 +1,7 @@
+import js.Browser;
+
+// Run this in terminal: haxelib install json2object
+
 class Level {
 	public var name:String;
 	public var scale:Int = 1;
@@ -20,6 +24,47 @@ class Level {
 	public var staticLevelText:StaticLevelText;
 
 	public function new() {}
+
+	public static function copy(level:Level):Level {
+		var newLevel:Level = new Level();
+
+		newLevel.name = level.name;
+
+		if (level.scale != null)
+			newLevel.scale = level.scale;
+
+		newLevel.player = Player.copy(level.player);
+		newLevel.bats = level.bats.map(bat -> Bat.copy(bat));
+		newLevel.ghosts = level.ghosts.map(ghost -> Ghost.copy(ghost));
+		newLevel.fires = level.fires.map(fire -> Fire.copy(fire));
+		newLevel.spikes = level.spikes.map(spike -> Spike.copy(spike));
+		newLevel.chests = level.chests.map(chest -> Chest.copy(chest));
+		newLevel.wall_blocks = level.wall_blocks.map(block -> WallBlock.copy(block));
+		newLevel.grey_blocks = level.grey_blocks.map(block -> GreyBlock.copy(block));
+		newLevel.yellow_blocks = level.yellow_blocks.map(block -> YellowBlock.copy(block));
+		newLevel.purple_blocks = level.purple_blocks.map(block -> PurpleBlock.copy(block));
+		newLevel.dynamicLevelText = DynamicLevelText.copy(level.dynamicLevelText);
+		newLevel.staticLevelText = StaticLevelText.copy(level.staticLevelText);
+
+		return newLevel;
+	}
+
+	public static function loadLevelFromFile(customLevelFileName:String):Void {
+		var url = Browser.location.origin + "/custom/" + customLevelFileName + "?" + Date.now();
+		var http = new haxe.Http(url);
+
+		http.onData = function (levelData:String){
+			var loadedLevel:Level = haxe.Json.parse(levelData);
+			var level:Level = Level.copy(loadedLevel);
+
+			var levelLayoutData:Dynamic = level.toLevelLayoutData();
+			var levelLayout:Dynamic = js.Syntax.code("new window.cr.layout(window.game, levelLayoutData)");
+
+			untyped window.game.doChangeLayout(levelLayout);
+		}
+		
+		http.request();
+	}
 
 	private function backgroundLayer():Dynamic {
 		return [
@@ -71,7 +116,7 @@ class Level {
 	}
 
 	private function wallBlocksLayer():Dynamic {
-		var wallBlocksInstances = this.wall_blocks.map(item -> item.ToLayoutComponent());
+		var wallBlocksInstances = this.wall_blocks.map(item -> item.toLayoutComponent());
 
 		return [
 			"GroundCol",
@@ -144,10 +189,10 @@ class Level {
 
 	private function chestsAndTilesLayer():Dynamic {
 		var instances:Array<Dynamic> = [];
-		instances.concat(this.chests.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.grey_blocks.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.yellow_blocks.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.purple_blocks.map(item -> item.ToLayoutComponent()));
+		instances = instances.concat(this.chests.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.grey_blocks.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.yellow_blocks.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.purple_blocks.map(item -> item.toLayoutComponent()));
 
 		return [
 			"UnderPlayer",
@@ -171,10 +216,10 @@ class Level {
 
 	private function enemiesLayer():Dynamic {
 		var instances:Array<Dynamic> = [];
-		instances.concat(this.bats.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.ghosts.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.fires.map(item -> item.ToLayoutComponent()));
-		instances.concat(this.spikes.map(item -> item.ToLayoutComponent()));
+		instances = instances.concat(this.bats.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.ghosts.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.fires.map(item -> item.toLayoutComponent()));
+		instances = instances.concat(this.spikes.map(item -> item.toLayoutComponent()));
 
 		return [
 			"Enemies",
@@ -213,7 +258,8 @@ class Level {
 			0,
 			0,
 			[
-				this.player.ToLayoutComponent()
+				[[-24, 48, 0, 16, 24, 0, 0, 1, 0.5, 1, 0, 0, []], 8, 1069, [], [[], [0, 0, 0.8, 0.4, 1]], [0, "Idle", 0, 1]],
+				this.player.toLayoutComponent()
 			],
 			[]
 		];
@@ -225,14 +271,14 @@ class Level {
 	}
 
 	private function uiLayer():Dynamic {
-		var cameraLayoutComponent = [[160, 90, 0, 56, 65, 0, 0, 1, 0.5, 0.4923076927661896, 0, 0, []], 24, 102, [[1], [1], [0], [0]], [[1]], [1, "Default", 0, 1]];
+		var cameraLayoutComponent:Dynamic = [[160, 90, 0, 56, 65, 0, 0, 1, 0.5, 0.4923076927661896, 0, 0, []], 24, 102, [[1], [1], [0], [0]], [[1]], [1, "Default", 0, 1]];
 		var instances:Array<Dynamic> = [cameraLayoutComponent];
 
 		if (this.dynamicLevelText != null)
-			instances.concat(this.dynamicLevelText.ToLayoutComponent());
+			instances.push(this.dynamicLevelText.toLayoutComponent());
 
 		if (this.staticLevelText != null)
-			instances.concat(this.staticLevelText.ToLayoutComponent());
+			instances.push(this.staticLevelText.toLayoutComponent());
 		
 		return [
 			"UI",
@@ -297,7 +343,7 @@ class Level {
 		];
 	}
 
-	public function ToLevelLayout():Dynamic {
+	public function toLevelLayoutData():Dynamic {
 		return [
 			this.name,
 			320,
@@ -319,5 +365,9 @@ class Level {
 			[],
 			[]
 		];
+	}
+
+	public static function main(){
+		untyped window.loadLevelFromFile = loadLevelFromFile;
 	}
 }

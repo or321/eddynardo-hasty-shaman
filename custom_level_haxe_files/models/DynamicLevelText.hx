@@ -6,8 +6,17 @@ class DynamicLevelText {
 
 	public function new() {}
 
+	public static function copy(text:DynamicLevelText):DynamicLevelText {
+		var newText:DynamicLevelText = new DynamicLevelText();
+		newText.value = text.value;
+		newText.width = text.width;
+		newText.height = text.height;
+		
+		return newText;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				160, // Position X

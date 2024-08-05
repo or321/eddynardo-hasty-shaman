@@ -4,8 +4,16 @@ class Player {
 
 	public function new() {}
 
+	public static function copy(player:Player):Player {
+		var newPlayer:Player = new Player();
+		newPlayer.positionX = player.positionX;
+		newPlayer.positionY = player.positionY;
+
+		return newPlayer;
+	}
+
 	// Transforming the class into a structure for the game code
-	public function ToLayoutComponent():Dynamic {
+	public function toLayoutComponent():Dynamic {
 		return [
 			[
 				this.positionX, 
