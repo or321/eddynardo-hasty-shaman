@@ -12,7 +12,9 @@ class PurpleBlock {
 		newBlock.positionX = block.positionX;
 		newBlock.positionY = block.positionY;
 		newBlock.width = block.width;
-		newBlock.height = block.height;
+
+		if (block.height != null)
+			newBlock.height = block.height;
 
 		return newBlock;
 	}

@@ -9,6 +9,7 @@ class GreyBlock {
 
 	public static function copy(block:GreyBlock):GreyBlock {
 		var newBlock:GreyBlock = new GreyBlock();
+		
 		newBlock.positionX = block.positionX;
 		newBlock.positionY = block.positionY;
 		newBlock.width = block.width;

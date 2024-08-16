@@ -10,11 +10,8 @@ class Chest {
 	public static function copy(chest:Chest):Chest {
 		var newChest:Chest = new Chest();
 
-		if (chest.positionX != null)
-			newChest.positionX = chest.positionX;
-
-		if (chest.positionY != null)
-			newChest.positionY = chest.positionY;
+		newChest.positionX = chest.positionX;
+		newChest.positionY = chest.positionY;
 
 		if (chest.width != null)
 			newChest.width = chest.width;

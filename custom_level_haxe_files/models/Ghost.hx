@@ -9,11 +9,8 @@ class Ghost {
 	public static function copy(ghost:Ghost):Ghost {
 		var newGhost:Ghost = new Ghost();
 
-		if (ghost.positionX != null)
-			newGhost.positionX = ghost.positionX;
-
-		if (ghost.positionY != null)
-			newGhost.positionY = ghost.positionY;
+		newGhost.positionX = ghost.positionX;
+		newGhost.positionY = ghost.positionY;
 
 		if (ghost.width != null)
 			newGhost.width = ghost.width;

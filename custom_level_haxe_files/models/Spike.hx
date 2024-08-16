@@ -11,11 +11,8 @@ class Spike {
 	public static function copy(spike:Spike):Spike {
 		var newSpike:Spike = new Spike();
 
-		if (spike.positionX != null)
-			newSpike.positionX = spike.positionX;
-
-		if (spike.positionY != null)
-			newSpike.positionY = spike.positionY;
+		newSpike.positionX = spike.positionX;
+		newSpike.positionY = spike.positionY;
 
 		if (spike.width != null)
 			newSpike.width = spike.width;

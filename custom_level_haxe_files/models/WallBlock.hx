@@ -9,6 +9,7 @@ class WallBlock {
 
 	public static function copy(block:WallBlock):WallBlock {
 		var newBlock:WallBlock = new WallBlock();
+		
 		newBlock.positionX = block.positionX;
 		newBlock.positionY = block.positionY;
 		newBlock.width = block.width;

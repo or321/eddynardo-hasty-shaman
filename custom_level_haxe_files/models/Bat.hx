@@ -9,11 +9,8 @@ class Bat {
 	public static function copy(bat:Bat):Bat {
 		var newBat:Bat = new Bat();
 
-		if (bat.positionX != null)
-			newBat.positionX = bat.positionX;
-
-		if (bat.positionY != null)
-			newBat.positionY = bat.positionY;
+		newBat.positionX = bat.positionX;
+		newBat.positionY = bat.positionY;
 
 		if (bat.width != null)
 			newBat.width = bat.width;

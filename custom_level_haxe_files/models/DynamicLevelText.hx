@@ -8,6 +8,7 @@ class DynamicLevelText {
 
 	public static function copy(text:DynamicLevelText):DynamicLevelText {
 		var newText:DynamicLevelText = new DynamicLevelText();
+		
 		newText.value = text.value;
 		newText.width = text.width;
 		newText.height = text.height;

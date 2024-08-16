@@ -10,6 +10,7 @@ class StaticLevelText {
 
 	public static function copy(text:StaticLevelText):StaticLevelText {
 		var newText:StaticLevelText = new StaticLevelText();
+		
 		newText.value = text.value;
 		newText.positionX = text.positionX;
 		newText.positionY = text.positionY;

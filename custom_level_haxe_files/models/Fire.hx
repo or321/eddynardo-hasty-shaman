@@ -9,11 +9,8 @@ class Fire {
 	public static function copy(fire:Fire):Fire {
 		var newFire:Fire = new Fire();
 
-		if (fire.positionX != null)
-			newFire.positionX = fire.positionX;
-
-		if (fire.positionY != null)
-			newFire.positionY = fire.positionY;
+		newFire.positionX = fire.positionX;
+		newFire.positionY = fire.positionY;
 
 		if (fire.width != null)
 			newFire.width = fire.width;
