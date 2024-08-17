@@ -2,40 +2,60 @@
 	"name": "CustomLevel1",
 	"scale": 1,
 	"player": {
-		"positionX": 100,
-		"positionY": 30
+		"positionX": 180,
+		"positionY": 60
 	},
 	"bats": [
 		{
 			"positionX": 100,
-			"positionY": 100
+			"positionY": 100,
+			"horizontalPathRadiusLength": 40
 		}
 	],
 	"ghosts": [
 		{
-			"positionX": 110,
-			"positionY": 110
+			"positionX": 260,
+			"positionY": 130,
+			"varticalPathRadiusLength": 20
 		}
 	],
 	"fires": [
 		{
-			"positionX": 120,
-			"positionY": 120
+			"positionX": 210,
+			"positionY": 72
 		}
 	],
 	"spikes": [
 		{
 			"positionX": 130,
-			"positionY": 130
+			"positionY": 152
 		}
 	],
 	"chests": [
 		{
 			"positionX": 40,
-			"positionY": 100
+			"positionY": 160
 		}
 	],
 	"wall_blocks": [
+		{
+			"positionX": 304,
+			"positionY": 180,
+			"width": 16,
+			"height": 180
+		},
+		{
+			"positionX": 0,
+			"positionY": 24,
+			"width": 320,
+			"height": 24
+		},
+		{
+			"positionX": 0,
+			"positionY": 180,
+			"width": 16,
+			"height": 180
+		},
 		{
 			"positionX": 0,
 			"positionY": 180,
@@ -44,9 +64,9 @@
 		},
 		{
 			"positionX": 160,
-			"positionY": 90,
-			"width": 30,
-			"height": 30
+			"positionY": 96,
+			"width": 80,
+			"height": 24
 		}
 	],
 	"grey_blocks": [
@@ -54,16 +74,15 @@
 	"yellow_blocks": [
 	],
 	"purple_blocks": [
-	],
-	"textures": {
-	},
+	],	
+	"texture_code": "81x-1,46,36x49,33,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,18x-1,16,8x17,31,8x-1,32,2x-1,47,18x-1,32,8x-1,47,8x-1,32,2x-1,47,18x-1,48,8x49,63,8x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,350,36x17,337",
 	"dynamicLevelText": {
 		"value": "Press X or J to pass through the ground",
 		"width": 216,
 		"height": 40
 	},
 	"staticLevelText": {
-		"value": "My first level (o_o)",
+		"value": "My first level",
 		"positionX": 0,
 		"positionY": 6,
 		"width": 320,

@@ -23,6 +23,8 @@ class Level {
 	public var dynamicLevelText:DynamicLevelText;
 	public var staticLevelText:StaticLevelText;
 
+	public var texture_code:String = "";
+
 	public function new() {}
 
 	public static function copy(level:Level):Level {
@@ -32,6 +34,9 @@ class Level {
 
 		if (level.scale != null)
 			newLevel.scale = level.scale;
+
+		if (level.texture_code != null)
+			newLevel.texture_code = level.texture_code;
 
 		newLevel.player = Player.copy(level.player);
 		newLevel.bats = level.bats.map(bat -> Bat.copy(bat));
@@ -139,6 +144,21 @@ class Level {
 	}
 
 	private function texturesLayer():Dynamic {
+		/*
+		top-left green corner inside wall: 46
+		top green ceiling: 49
+		top-right green corner inside wall: 33
+		left green wall: 47
+		right green wall: 32
+		bottom-left green corner inside wall: 350
+		bottom green floor: 17
+		bottom-right green corner inside wall: 337
+		top-left green corner: 16
+		top-right green corner: 31
+		bottom-left green corner: 48
+		bottom-right green corner: 63
+
+		 */
 		return [
 			"Ground",
 			2,
@@ -173,7 +193,7 @@ class Level {
 						[
 							40,
 							24,
-							"" // I need to figure out how this string affects all the textures in a level
+							this.texture_code
 						]
 					],
 					12,

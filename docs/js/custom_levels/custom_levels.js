@@ -240,6 +240,7 @@ Lambda.exists = function(it,f) {
 	return false;
 };
 var Level = function() {
+	this.texture_code = "";
 	this.scale = 1;
 };
 Level.__name__ = true;
@@ -248,6 +249,9 @@ Level.copy = function(level) {
 	newLevel.name = level.name;
 	if(level.scale != null) {
 		newLevel.scale = level.scale;
+	}
+	if(level.texture_code != null) {
+		newLevel.texture_code = level.texture_code;
 	}
 	newLevel.player = Player.copy(level.player);
 	var _this = level.bats;
@@ -367,7 +371,7 @@ Level.prototype = {
 		return ["GroundCol",1,405191807692717,true,[255,255,255],true,1,1,1,false,false,1,0,0,wallBlocksInstances,[]];
 	}
 	,texturesLayer: function() {
-		return ["Ground",2,683889757010212,true,[255,255,255],true,1,1,1,false,false,1,0,0,[[[0,0,0,320,192,0,0,1,0,0,0,0,[[0,1,1]],[40,24,""]],12,78,[],[],[0,8,8,0,0,0,0,1]]],[]];
+		return ["Ground",2,683889757010212,true,[255,255,255],true,1,1,1,false,false,1,0,0,[[[0,0,0,320,192,0,0,1,0,0,0,0,[[0,1,1]],[40,24,this.texture_code]],12,78,[],[],[0,8,8,0,0,0,0,1]]],[]];
 	}
 	,chestsAndTilesLayer: function() {
 		var instances = [];
