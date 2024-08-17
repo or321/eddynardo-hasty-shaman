@@ -8,29 +8,49 @@ function $extend(from, fields) {
 	return proto;
 }
 var Bat = function() {
+	this.varticalPathCycleOffset = 0;
+	this.varticalPathCycleTime = 2;
+	this.varticalPathRadiusLength = 2;
+	this.horizontalPathCycleOffset = 0;
+	this.horizontalPathCycleTime = 5;
+	this.horizontalPathRadiusLength = 0;
 	this.height = 17;
 	this.width = 16;
 };
 Bat.__name__ = true;
 Bat.copy = function(bat) {
 	var newBat = new Bat();
-	if(bat.positionX != null) {
-		newBat.positionX = bat.positionX;
-	}
-	if(bat.positionY != null) {
-		newBat.positionY = bat.positionY;
-	}
+	newBat.positionX = bat.positionX;
+	newBat.positionY = bat.positionY;
 	if(bat.width != null) {
 		newBat.width = bat.width;
 	}
 	if(bat.height != null) {
 		newBat.height = bat.height;
 	}
+	if(bat.horizontalPathRadiusLength != null) {
+		newBat.horizontalPathRadiusLength = bat.horizontalPathRadiusLength;
+	}
+	if(bat.horizontalPathCycleTime != null) {
+		newBat.horizontalPathCycleTime = bat.horizontalPathCycleTime;
+	}
+	if(bat.horizontalPathCycleOffset != null) {
+		newBat.horizontalPathCycleOffset = bat.horizontalPathCycleOffset;
+	}
+	if(bat.varticalPathRadiusLength != null) {
+		newBat.varticalPathRadiusLength = bat.varticalPathRadiusLength;
+	}
+	if(bat.varticalPathCycleTime != null) {
+		newBat.varticalPathCycleTime = bat.varticalPathCycleTime;
+	}
+	if(bat.varticalPathCycleOffset != null) {
+		newBat.varticalPathCycleOffset = bat.varticalPathCycleOffset;
+	}
 	return newBat;
 };
 Bat.prototype = {
 	toLayoutComponent: function() {
-		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],40,1392,[[0]],[[1,0,0,6,0,6,0,30,0],[1,1,0,2,0,0,0,2,0],[1,7,0,2,0,0,1,15,0],[0,0,0.01,0.3,1]],[0,"Bat",0,1]];
+		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],40,1392,[[0]],[[1,0,0,this.horizontalPathCycleTime,0,this.horizontalPathCycleOffset,0,this.horizontalPathRadiusLength,0],[1,1,0,this.varticalPathCycleTime,0,this.varticalPathCycleOffset,0,this.varticalPathRadiusLength,0],[1,7,0,2,0,0,1,15,0],[0,0,0.01,0.3,1]],[0,"Bat",0,1]];
 	}
 };
 var Chest = function() {
@@ -40,12 +60,8 @@ var Chest = function() {
 Chest.__name__ = true;
 Chest.copy = function(chest) {
 	var newChest = new Chest();
-	if(chest.positionX != null) {
-		newChest.positionX = chest.positionX;
-	}
-	if(chest.positionY != null) {
-		newChest.positionY = chest.positionY;
-	}
+	newChest.positionX = chest.positionX;
+	newChest.positionY = chest.positionY;
 	if(chest.width != null) {
 		newChest.width = chest.width;
 	}
@@ -107,12 +123,8 @@ var Fire = function() {
 Fire.__name__ = true;
 Fire.copy = function(fire) {
 	var newFire = new Fire();
-	if(fire.positionX != null) {
-		newFire.positionX = fire.positionX;
-	}
-	if(fire.positionY != null) {
-		newFire.positionY = fire.positionY;
-	}
+	newFire.positionX = fire.positionX;
+	newFire.positionY = fire.positionY;
 	if(fire.width != null) {
 		newFire.width = fire.width;
 	}
@@ -127,29 +139,49 @@ Fire.prototype = {
 	}
 };
 var Ghost = function() {
+	this.varticalPathCycleOffset = 0;
+	this.varticalPathCycleTime = 5;
+	this.varticalPathRadiusLength = 5;
+	this.horizontalPathCycleOffset = 0;
+	this.horizontalPathCycleTime = 2;
+	this.horizontalPathRadiusLength = 0;
 	this.height = 17;
 	this.width = 10;
 };
 Ghost.__name__ = true;
 Ghost.copy = function(ghost) {
 	var newGhost = new Ghost();
-	if(ghost.positionX != null) {
-		newGhost.positionX = ghost.positionX;
-	}
-	if(ghost.positionY != null) {
-		newGhost.positionY = ghost.positionY;
-	}
+	newGhost.positionX = ghost.positionX;
+	newGhost.positionY = ghost.positionY;
 	if(ghost.width != null) {
 		newGhost.width = ghost.width;
 	}
 	if(ghost.height != null) {
 		newGhost.height = ghost.height;
 	}
+	if(ghost.horizontalPathRadiusLength != null) {
+		newGhost.horizontalPathRadiusLength = ghost.horizontalPathRadiusLength;
+	}
+	if(ghost.horizontalPathCycleTime != null) {
+		newGhost.horizontalPathCycleTime = ghost.horizontalPathCycleTime;
+	}
+	if(ghost.horizontalPathCycleOffset != null) {
+		newGhost.horizontalPathCycleOffset = ghost.horizontalPathCycleOffset;
+	}
+	if(ghost.varticalPathRadiusLength != null) {
+		newGhost.varticalPathRadiusLength = ghost.varticalPathRadiusLength;
+	}
+	if(ghost.varticalPathCycleTime != null) {
+		newGhost.varticalPathCycleTime = ghost.varticalPathCycleTime;
+	}
+	if(ghost.varticalPathCycleOffset != null) {
+		newGhost.varticalPathCycleOffset = ghost.varticalPathCycleOffset;
+	}
 	return newGhost;
 };
 Ghost.prototype = {
 	toLayoutComponent: function() {
-		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],40,1388,[[0]],[[1,0,0,2,0,1,0,0,0],[1,1,0,3,0,0,0,4,0],[1,7,0,2,0,0,1,0,0],[0,0,0.01,0.3,1]],[0,"Ghost",0,1]];
+		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],40,1388,[[0]],[[1,0,0,this.horizontalPathCycleTime,0,this.horizontalPathCycleOffset,0,this.horizontalPathRadiusLength,0],[1,1,0,this.varticalPathCycleTime,0,this.varticalPathCycleOffset,0,this.varticalPathRadiusLength,0],[1,7,0,2,0,0,1,0,0],[0,0,0.01,0.3,1]],[0,"Ghost",0,1]];
 	}
 };
 var GreyBlock = function() {
@@ -465,7 +497,9 @@ PurpleBlock.copy = function(block) {
 	newBlock.positionX = block.positionX;
 	newBlock.positionY = block.positionY;
 	newBlock.width = block.width;
-	newBlock.height = block.height;
+	if(block.height != null) {
+		newBlock.height = block.height;
+	}
 	return newBlock;
 };
 PurpleBlock.prototype = {
@@ -481,12 +515,8 @@ var Spike = function() {
 Spike.__name__ = true;
 Spike.copy = function(spike) {
 	var newSpike = new Spike();
-	if(spike.positionX != null) {
-		newSpike.positionX = spike.positionX;
-	}
-	if(spike.positionY != null) {
-		newSpike.positionY = spike.positionY;
-	}
+	newSpike.positionX = spike.positionX;
+	newSpike.positionY = spike.positionY;
 	if(spike.width != null) {
 		newSpike.width = spike.width;
 	}
