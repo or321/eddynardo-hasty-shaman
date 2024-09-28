@@ -1,6 +1,8 @@
--main Level
+-main Main
 -cp custom_level_haxe_files/enums
 -cp custom_level_haxe_files/models
+-cp custom_level_haxe_files/services
+-cp custom_level_haxe_files/
 -js ./docs/js/custom_levels/custom_levels.js
 
 --next

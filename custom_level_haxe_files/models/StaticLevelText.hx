@@ -9,6 +9,8 @@ class StaticLevelText {
 	public function new() {}
 
 	public static function copy(text:StaticLevelText):StaticLevelText {
+		if (text == null) return null;
+		
 		var newText:StaticLevelText = new StaticLevelText();
 		
 		newText.value = text.value;

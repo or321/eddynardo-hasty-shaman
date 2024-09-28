@@ -1,7 +1,5 @@
 import js.Browser;
 
-// Run this in terminal: haxelib install json2object
-
 class Level {
 	public var name:String;
 	public var scale:Int = 1;
@@ -24,6 +22,8 @@ class Level {
 	public var staticLevelText:StaticLevelText;
 
 	public var texture_code:String = "";
+
+	public var camera:Camera;
 
 	public function new() {}
 
@@ -50,25 +50,9 @@ class Level {
 		newLevel.purple_blocks = level.purple_blocks.map(block -> PurpleBlock.copy(block));
 		newLevel.dynamicLevelText = DynamicLevelText.copy(level.dynamicLevelText);
 		newLevel.staticLevelText = StaticLevelText.copy(level.staticLevelText);
+		newLevel.camera = Camera.copy(level.camera);
 
 		return newLevel;
-	}
-
-	public static function loadLevelFromFile(customLevelFileName:String):Void {
-		var url = Browser.location.origin + "/custom/" + customLevelFileName + "?" + Date.now();
-		var http = new haxe.Http(url);
-
-		http.onData = function (levelData:String){
-			var loadedLevel:Level = haxe.Json.parse(levelData);
-			var level:Level = Level.copy(loadedLevel);
-
-			var levelLayoutData:Dynamic = level.toLevelLayoutData();
-			var levelLayout:Dynamic = js.Syntax.code("new window.cr.layout(window.game, levelLayoutData)");
-
-			untyped window.game.doChangeLayout(levelLayout);
-		}
-		
-		http.request();
 	}
 
 	private function backgroundLayer():Dynamic {
@@ -285,14 +269,13 @@ class Level {
 		];
 	}
 
-	// No idea what is this layer supposed to be
+	// No idea what this layer is supposed to be
 	private function overPlayerLayer():Dynamic {
 		return ["OverPlayer", 6, 530797518988833, true, [255, 255, 255], true, 1, 1, 1, false, false, 1, 0, 0, [], []];
 	}
 
 	private function uiLayer():Dynamic {
-		var cameraLayoutComponent:Dynamic = [[160, 90, 0, 56, 65, 0, 0, 1, 0.5, 0.4923076927661896, 0, 0, []], 24, 102, [[1], [1], [0], [0]], [[1]], [1, "Default", 0, 1]];
-		var instances:Array<Dynamic> = [cameraLayoutComponent];
+		var instances:Array<Dynamic> = [this.camera.toLayoutComponent()];
 
 		if (this.dynamicLevelText != null)
 			instances.push(this.dynamicLevelText.toLayoutComponent());
@@ -385,9 +368,5 @@ class Level {
 			[],
 			[]
 		];
-	}
-
-	public static function main(){
-		untyped window.loadLevelFromFile = loadLevelFromFile;
 	}
 }

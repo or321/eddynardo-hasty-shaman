@@ -53,6 +53,18 @@ Bat.prototype = {
 		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],40,1392,[[0]],[[1,0,0,this.horizontalPathCycleTime,0,this.horizontalPathCycleOffset,0,this.horizontalPathRadiusLength,0],[1,1,0,this.varticalPathCycleTime,0,this.varticalPathCycleOffset,0,this.varticalPathRadiusLength,0],[1,7,0,2,0,0,1,15,0],[0,0,0.01,0.3,1]],[0,"Bat",0,1]];
 	}
 };
+var Camera = function() {
+};
+Camera.__name__ = true;
+Camera.copy = function(camera) {
+	var newCamera = new Camera();
+	return newCamera;
+};
+Camera.prototype = {
+	toLayoutComponent: function() {
+		return [[160,90,0,56,65,0,0,1,0.5,0.4923076927661896,0,0,[]],24,102,[[1],[1],[0],[0]],[[1]],[1,"Default",0,1]];
+	}
+};
 var Chest = function() {
 	this.height = 16;
 	this.width = 16;
@@ -75,6 +87,40 @@ Chest.prototype = {
 		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,1,0.5,1,0,0,[]],21,1345,[],[],[0,"Default",0,1]];
 	}
 };
+var CustomLevelsHandler = function() {
+	window.customLevelsHandler = this;
+	var pageUrl = new URL($global.location.href);
+	var levelPackFileName = pageUrl.searchParams.get("pack");
+	if(levelPackFileName == null) {
+		levelPackFileName = "default";
+	}
+	this.loadCustomLevelsFromFile(levelPackFileName);
+};
+CustomLevelsHandler.__name__ = true;
+CustomLevelsHandler.prototype = {
+	loadCustomLevelsFromFile: function(levelPackFileName) {
+		var _gthis = this;
+		var levelPackUrl = $global.location.origin + "/custom_level_packs/" + levelPackFileName + ".json?" + new Date().getTime();
+		var http = new haxe_http_HttpJs(levelPackUrl);
+		this.loading = true;
+		http.onData = function(levelPackData) {
+			var loadedLevels = JSON.parse(levelPackData);
+			var result = new Array(loadedLevels.length);
+			var _g = 0;
+			var _g1 = loadedLevels.length;
+			while(_g < _g1) {
+				var i = _g++;
+				result[i] = Level.copy(loadedLevels[i]);
+			}
+			_gthis.levels = result;
+			_gthis.loading = false;
+		};
+		http.onError = function(error) {
+			_gthis.loadCustomLevelsFromFile("default");
+		};
+		http.request();
+	}
+};
 function Direction_directionAngle(direction) {
 	switch(direction) {
 	case 0:
@@ -91,6 +137,9 @@ var DynamicLevelText = function() {
 };
 DynamicLevelText.__name__ = true;
 DynamicLevelText.copy = function(text) {
+	if(text == null) {
+		return null;
+	}
 	var newText = new DynamicLevelText();
 	newText.value = text.value;
 	newText.width = text.width;
@@ -337,22 +386,8 @@ Level.copy = function(level) {
 	newLevel.purple_blocks = result;
 	newLevel.dynamicLevelText = DynamicLevelText.copy(level.dynamicLevelText);
 	newLevel.staticLevelText = StaticLevelText.copy(level.staticLevelText);
+	newLevel.camera = Camera.copy(level.camera);
 	return newLevel;
-};
-Level.loadLevelFromFile = function(customLevelFileName) {
-	var url = $global.location.origin + "/custom/" + customLevelFileName + "?" + Std.string(new Date());
-	var http = new haxe_http_HttpJs(url);
-	http.onData = function(levelData) {
-		var loadedLevel = JSON.parse(levelData);
-		var level = Level.copy(loadedLevel);
-		var levelLayoutData = level.toLevelLayoutData();
-		var levelLayout = new window.cr.layout(window.game, levelLayoutData);
-		window.game.doChangeLayout(levelLayout);
-	};
-	http.request();
-};
-Level.main = function() {
-	window.loadLevelFromFile = Level.loadLevelFromFile;
 };
 Level.prototype = {
 	backgroundLayer: function() {
@@ -460,8 +495,7 @@ Level.prototype = {
 		return ["OverPlayer",6,530797518988833,true,[255,255,255],true,1,1,1,false,false,1,0,0,[],[]];
 	}
 	,uiLayer: function() {
-		var cameraLayoutComponent = [[160,90,0,56,65,0,0,1,0.5,0.4923076927661896,0,0,[]],24,102,[[1],[1],[0],[0]],[[1]],[1,"Default",0,1]];
-		var instances = [cameraLayoutComponent];
+		var instances = [this.camera.toLayoutComponent()];
 		if(this.dynamicLevelText != null) {
 			instances.push(this.dynamicLevelText.toLayoutComponent());
 		}
@@ -476,6 +510,11 @@ Level.prototype = {
 	,toLevelLayoutData: function() {
 		return [this.name,320,180,true,"LevelCode",572186813770178,[this.backgroundLayer(),this.wallBlocksLayer(),this.texturesLayer(),this.chestsAndTilesLayer(),this.enemiesLayer(),this.playerLayer(),this.overPlayerLayer(),this.uiLayer(),this.fullScreenFXLayer()],[],[]];
 	}
+};
+var Main = function() { };
+Main.__name__ = true;
+Main.main = function() {
+	var customLevelsHandler = new CustomLevelsHandler();
 };
 Math.__name__ = true;
 var Player = function() {
@@ -541,6 +580,9 @@ var StaticLevelText = function() {
 };
 StaticLevelText.__name__ = true;
 StaticLevelText.copy = function(text) {
+	if(text == null) {
+		return null;
+	}
 	var newText = new StaticLevelText();
 	newText.value = text.value;
 	newText.positionX = text.positionX;
@@ -1083,5 +1125,6 @@ String.__name__ = true;
 Array.__name__ = true;
 Date.__name__ = "Date";
 js_Boot.__toStr = ({ }).toString;
-Level.main();
+CustomLevelsHandler.DEFAULT_FILE_NAME = "default";
+Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

@@ -7,6 +7,8 @@ class DynamicLevelText {
 	public function new() {}
 
 	public static function copy(text:DynamicLevelText):DynamicLevelText {
+		if (text == null) return null;
+		
 		var newText:DynamicLevelText = new DynamicLevelText();
 		
 		newText.value = text.value;
