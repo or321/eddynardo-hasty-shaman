@@ -3,12 +3,10 @@ import js.html.URL;
 
 class CustomLevelsHandler {
     public var levels:Array<Level>;
-    public var loading:Bool;
+    public var loading:Bool = true;
     private static inline var DEFAULT_FILE_NAME = "default";
 
     public function new(){
-        untyped window.customLevelsHandler = this;
-
         var pageUrl = new URL(Browser.location.href);
         var levelPackFileName = pageUrl.searchParams.get("pack");
         if (levelPackFileName == null)
@@ -21,7 +19,6 @@ class CustomLevelsHandler {
         var levelPackUrl = Browser.location.origin + "/custom_level_packs/" + levelPackFileName + ".json?" + Date.now().getTime();
 
 		var http = new haxe.Http(levelPackUrl);
-        loading = true;
 
 		http.onData = function (levelPackData:String){
 			var loadedLevels:Array<Level> = haxe.Json.parse(levelPackData);

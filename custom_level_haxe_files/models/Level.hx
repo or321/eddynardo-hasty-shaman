@@ -6,17 +6,21 @@ class Level {
 
 	public var player:Player;
 	
-	public var bats:Array<Bat>;
-	public var ghosts:Array<Ghost>;
-	public var fires:Array<Fire>;
-	public var spikes:Array<Spike>;
+	public var bats:Array<Bat> = new Array<Bat>();
+	public var ghosts:Array<Ghost> = new Array<Ghost>();
+	public var fires:Array<Fire> = new Array<Fire>();
+	public var spikes:Array<Spike> = new Array<Spike>();
 
-	public var chests:Array<Chest>;
+	public var chests:Array<Chest> = new Array<Chest>();
 
-	public var wall_blocks:Array<WallBlock>; // All the blocks that define the walls, floors and ceilings of the level
-	public var grey_blocks:Array<GreyBlock>; // Tiles that block the character from teleporting
-	public var yellow_blocks:Array<YellowBlock>; // Tiles that invert the level
-	public var purple_blocks:Array<PurpleBlock>; // Tiles that invert the character orientation
+	// All the blocks that define the walls, floors and ceilings of the level
+	public var wall_blocks:Array<WallBlock> = new Array<WallBlock>();
+	// Tiles that block the character from teleporting
+	public var grey_blocks:Array<GreyBlock> = new Array<GreyBlock>();
+	// Tiles that invert the level
+	public var yellow_blocks:Array<YellowBlock> = new Array<YellowBlock>();
+	// Tiles that invert the character orientation
+	public var purple_blocks:Array<PurpleBlock> = new Array<PurpleBlock>();
 
 	public var dynamicLevelText:DynamicLevelText;
 	public var staticLevelText:StaticLevelText;
@@ -39,15 +43,33 @@ class Level {
 			newLevel.texture_code = level.texture_code;
 
 		newLevel.player = Player.copy(level.player);
-		newLevel.bats = level.bats.map(bat -> Bat.copy(bat));
-		newLevel.ghosts = level.ghosts.map(ghost -> Ghost.copy(ghost));
-		newLevel.fires = level.fires.map(fire -> Fire.copy(fire));
-		newLevel.spikes = level.spikes.map(spike -> Spike.copy(spike));
+
+		if (level.bats != null)
+			newLevel.bats = level.bats.map(bat -> Bat.copy(bat));
+		
+		if (level.ghosts != null)
+			newLevel.ghosts = level.ghosts.map(ghost -> Ghost.copy(ghost));
+
+		if (level.fires != null)
+			newLevel.fires = level.fires.map(fire -> Fire.copy(fire));
+
+		if (level.spikes != null)
+			newLevel.spikes = level.spikes.map(spike -> Spike.copy(spike));
+
 		newLevel.chests = level.chests.map(chest -> Chest.copy(chest));
-		newLevel.wall_blocks = level.wall_blocks.map(block -> WallBlock.copy(block));
-		newLevel.grey_blocks = level.grey_blocks.map(block -> GreyBlock.copy(block));
-		newLevel.yellow_blocks = level.yellow_blocks.map(block -> YellowBlock.copy(block));
-		newLevel.purple_blocks = level.purple_blocks.map(block -> PurpleBlock.copy(block));
+
+		if (level.wall_blocks != null)
+			newLevel.wall_blocks = level.wall_blocks.map(block -> WallBlock.copy(block));
+
+		if (level.grey_blocks != null)
+			newLevel.grey_blocks = level.grey_blocks.map(block -> GreyBlock.copy(block));
+
+		if (level.yellow_blocks != null)
+			newLevel.yellow_blocks = level.yellow_blocks.map(block -> YellowBlock.copy(block));
+
+		if (level.purple_blocks != null)
+			newLevel.purple_blocks = level.purple_blocks.map(block -> PurpleBlock.copy(block));
+
 		newLevel.dynamicLevelText = DynamicLevelText.copy(level.dynamicLevelText);
 		newLevel.staticLevelText = StaticLevelText.copy(level.staticLevelText);
 		newLevel.camera = Camera.copy(level.camera);

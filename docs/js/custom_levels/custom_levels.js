@@ -88,7 +88,7 @@ Chest.prototype = {
 	}
 };
 var CustomLevelsHandler = function() {
-	window.customLevelsHandler = this;
+	this.loading = true;
 	var pageUrl = new URL($global.location.href);
 	var levelPackFileName = pageUrl.searchParams.get("pack");
 	if(levelPackFileName == null) {
@@ -102,7 +102,6 @@ CustomLevelsHandler.prototype = {
 		var _gthis = this;
 		var levelPackUrl = $global.location.origin + "/custom_level_packs/" + levelPackFileName + ".json?" + new Date().getTime();
 		var http = new haxe_http_HttpJs(levelPackUrl);
-		this.loading = true;
 		http.onData = function(levelPackData) {
 			var loadedLevels = JSON.parse(levelPackData);
 			var result = new Array(loadedLevels.length);
@@ -290,6 +289,15 @@ Lambda.exists = function(it,f) {
 };
 var Level = function() {
 	this.texture_code = "";
+	this.purple_blocks = [];
+	this.yellow_blocks = [];
+	this.grey_blocks = [];
+	this.wall_blocks = [];
+	this.chests = [];
+	this.spikes = [];
+	this.fires = [];
+	this.ghosts = [];
+	this.bats = [];
 	this.scale = 1;
 };
 Level.__name__ = true;
@@ -303,42 +311,50 @@ Level.copy = function(level) {
 		newLevel.texture_code = level.texture_code;
 	}
 	newLevel.player = Player.copy(level.player);
-	var _this = level.bats;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = Bat.copy(_this[i]);
+	if(level.bats != null) {
+		var _this = level.bats;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = Bat.copy(_this[i]);
+		}
+		newLevel.bats = result;
 	}
-	newLevel.bats = result;
-	var _this = level.ghosts;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = Ghost.copy(_this[i]);
+	if(level.ghosts != null) {
+		var _this = level.ghosts;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = Ghost.copy(_this[i]);
+		}
+		newLevel.ghosts = result;
 	}
-	newLevel.ghosts = result;
-	var _this = level.fires;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = Fire.copy(_this[i]);
+	if(level.fires != null) {
+		var _this = level.fires;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = Fire.copy(_this[i]);
+		}
+		newLevel.fires = result;
 	}
-	newLevel.fires = result;
-	var _this = level.spikes;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = Spike.copy(_this[i]);
+	if(level.spikes != null) {
+		var _this = level.spikes;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = Spike.copy(_this[i]);
+		}
+		newLevel.spikes = result;
 	}
-	newLevel.spikes = result;
 	var _this = level.chests;
 	var result = new Array(_this.length);
 	var _g = 0;
@@ -348,42 +364,50 @@ Level.copy = function(level) {
 		result[i] = Chest.copy(_this[i]);
 	}
 	newLevel.chests = result;
-	var _this = level.wall_blocks;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = WallBlock.copy(_this[i]);
+	if(level.wall_blocks != null) {
+		var _this = level.wall_blocks;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = WallBlock.copy(_this[i]);
+		}
+		newLevel.wall_blocks = result;
 	}
-	newLevel.wall_blocks = result;
-	var _this = level.grey_blocks;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = GreyBlock.copy(_this[i]);
+	if(level.grey_blocks != null) {
+		var _this = level.grey_blocks;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = GreyBlock.copy(_this[i]);
+		}
+		newLevel.grey_blocks = result;
 	}
-	newLevel.grey_blocks = result;
-	var _this = level.yellow_blocks;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = YellowBlock.copy(_this[i]);
+	if(level.yellow_blocks != null) {
+		var _this = level.yellow_blocks;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = YellowBlock.copy(_this[i]);
+		}
+		newLevel.yellow_blocks = result;
 	}
-	newLevel.yellow_blocks = result;
-	var _this = level.purple_blocks;
-	var result = new Array(_this.length);
-	var _g = 0;
-	var _g1 = _this.length;
-	while(_g < _g1) {
-		var i = _g++;
-		result[i] = PurpleBlock.copy(_this[i]);
+	if(level.purple_blocks != null) {
+		var _this = level.purple_blocks;
+		var result = new Array(_this.length);
+		var _g = 0;
+		var _g1 = _this.length;
+		while(_g < _g1) {
+			var i = _g++;
+			result[i] = PurpleBlock.copy(_this[i]);
+		}
+		newLevel.purple_blocks = result;
 	}
-	newLevel.purple_blocks = result;
 	newLevel.dynamicLevelText = DynamicLevelText.copy(level.dynamicLevelText);
 	newLevel.staticLevelText = StaticLevelText.copy(level.staticLevelText);
 	newLevel.camera = Camera.copy(level.camera);
@@ -514,21 +538,29 @@ Level.prototype = {
 var Main = function() { };
 Main.__name__ = true;
 Main.main = function() {
-	var customLevelsHandler = new CustomLevelsHandler();
+	window.customLevelsHandler = new CustomLevelsHandler();
 };
 Math.__name__ = true;
 var Player = function() {
+	this.height = 15;
+	this.width = 10;
 };
 Player.__name__ = true;
 Player.copy = function(player) {
 	var newPlayer = new Player();
 	newPlayer.positionX = player.positionX;
 	newPlayer.positionY = player.positionY;
+	if(player.width != null) {
+		newPlayer.width = player.width;
+	}
+	if(player.height != null) {
+		newPlayer.height = player.height;
+	}
 	return newPlayer;
 };
 Player.prototype = {
 	toLayoutComponent: function() {
-		return [[this.positionX,this.positionY,0,10,15,0,0,0.5,0.5,1,0,0,[]],9,1321,[[0],[0],[0],[1],["No Spell"],[1],[40],[1],[0],[1],[0],[0]],[[80,1500,1500,130,350,1000,0,0,0,1]],[1,"Default",0,1]];
+		return [[this.positionX,this.positionY,0,this.width,this.height,0,0,0.5,0.5,1,0,0,[]],9,1321,[[0],[0],[0],[1],["No Spell"],[1],[40],[1],[0],[1],[0],[0]],[[80,1500,1500,130,350,1000,0,0,0,1]],[1,"Default",0,1]];
 	}
 };
 var PurpleBlock = function() {

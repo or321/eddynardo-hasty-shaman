@@ -1,13 +1,22 @@
 class Player {
 	public var positionX:Int;
 	public var positionY:Int;
+	public var width:Int = 10;
+	public var height:Int = 15;
 
 	public function new() {}
 
 	public static function copy(player:Player):Player {
 		var newPlayer:Player = new Player();
+
 		newPlayer.positionX = player.positionX;
 		newPlayer.positionY = player.positionY;
+
+		if (player.width != null)
+			newPlayer.width = player.width;
+
+		if (player.height != null)
+			newPlayer.height = player.height;
 
 		return newPlayer;
 	}
@@ -19,8 +28,8 @@ class Player {
 				this.positionX, 
 				this.positionY, 
 				0, 
-				10, 
-				15, 
+				this.width, 
+				this.height, 
 				0, 
 				0, 
 				0.5, 

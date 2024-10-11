@@ -4889,13 +4889,28 @@ quat4.str = function (a) {
 					t.effect_types[j].index = j;
 			}
 		}
+		
 		for (i = 0, len = pm[5].length; i < len; i++) {
 			m = pm[5][i];
 			var layout = new cr.layout(this, m);
+
+			if (layout.name === "End"){
+				// Or321 - load the custom levels before the "End" layout
+				for (j = 0; j < window.customLevelsHandler.levels.length; j++){
+					let level = window.customLevelsHandler.levels[j];
+					let customLayout = new cr.layout(this, level.toLevelLayoutData());
+		
+					cr.seal(customLayout);
+					this.layouts[customLayout.name] = customLayout;
+					this.layouts_by_index.push(customLayout);
+				}
+			}
+
 			cr.seal(layout);
 			this.layouts[layout.name] = layout;
 			this.layouts_by_index.push(layout);
 		}
+
 		for (i = 0, len = pm[6].length; i < len; i++) {
 			m = pm[6][i];
 			var sheet = new cr.eventsheet(this, m);

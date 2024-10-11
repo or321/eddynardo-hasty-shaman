@@ -1,23 +1,35 @@
-// Start the Construct 2 project running on window load.
-jQuery(document).ready(function () {
-	// Create new runtime using the c2canvas
-	window.game = cr_createRuntime("c2canvas");
+(function() {
+	// Start the Construct 2 project running on window load.
+	jQuery(document).ready(function () {
+		startGame();
+	});
 
-	cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());
+	function startGame() {
+		// Wait for the custom levels to load
+		if (!window.customLevelsHandler.loading) {
+			// Create new runtime using the c2canvas
+			window.game = cr_createRuntime("c2canvas");
 
-	_autosplitter.onScene("Menu");
-});
+			cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());
 
-// Pause and resume on page becoming visible/invisible
-function onVisibilityChanged() {
-	if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
-		cr_setSuspended(true);
-	else
-		cr_setSuspended(false);
-};
+			_autosplitter.onScene("Menu");
+		}
+		else{
+			setTimeout(startGame, 50);
+		}
+	}
+
+	// Pause and resume on page becoming visible/invisible
+	function onVisibilityChanged() {
+		if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
+			cr_setSuspended(true);
+		else
+			cr_setSuspended(false);
+	};
 
 
-document.addEventListener("visibilitychange", onVisibilityChanged, false);
-document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
-document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
-document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
+	document.addEventListener("visibilitychange", onVisibilityChanged, false);
+	document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
+	document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
+	document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
+}());

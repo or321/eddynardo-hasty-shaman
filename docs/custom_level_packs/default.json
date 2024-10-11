@@ -83,7 +83,7 @@
 			"height": 40
 		},
 		"staticLevelText": {
-			"value": "Default first level",
+			"value": "The first level",
 			"positionX": 0,
 			"positionY": 6,
 			"width": 320,
@@ -94,46 +94,22 @@
 		"name": "CustomLevel2",
 		"scale": 1,
 		"player": {
-			"positionX": 180,
-			"positionY": 60
+			"positionX": 16,
+			"positionY": 168,
+			"width": 9,
+			"height": 14
 		},
-		"bats": [
-			{
-				"positionX": 100,
-				"positionY": 100,
-				"horizontalPathRadiusLength": 40
-			}
-		],
-		"ghosts": [
-			{
-				"positionX": 260,
-				"positionY": 130,
-				"varticalPathRadiusLength": 20
-			}
-		],
-		"fires": [
-			{
-				"positionX": 210,
-				"positionY": 72
-			}
-		],
-		"spikes": [
-			{
-				"positionX": 130,
-				"positionY": 152
-			}
-		],
 		"chests": [
-			{
-				"positionX": 40,
-				"positionY": 160
+			{ 
+				"positionX": 304,
+				"positionY": 168
 			}
 		],
 		"wall_blocks": [
 			{
-				"positionX": 304,
+				"positionX": 312,
 				"positionY": 180,
-				"width": 16,
+				"width": 8,
 				"height": 180
 			},
 			{
@@ -145,32 +121,134 @@
 			{
 				"positionX": 0,
 				"positionY": 180,
-				"width": 16,
+				"width": 8,
 				"height": 180
 			},
 			{
 				"positionX": 0,
 				"positionY": 180,
 				"width": 320,
-				"height": 20
+				"height": 12
 			},
 			{
-				"positionX": 160,
-				"positionY": 96,
-				"width": 80,
-				"height": 24
+				"positionX": 0,
+				"positionY": 56,
+				"width": 320,
+				"height": 16
+			},
+			{
+				"positionX": 0,
+				"positionY": 88,
+				"width": 320,
+				"height": 16
+			},
+			{
+				"positionX": 0,
+				"positionY": 120,
+				"width": 320,
+				"height": 16
+			},
+			{
+				"positionX": 0,
+				"positionY": 152,
+				"width": 320,
+				"height": 16
+			},
+			{
+				"positionX": 24,
+				"positionY": 104,
+				"width": 16,
+				"height": 80
+			},
+			{
+				"positionX": 24,
+				"positionY": 180,
+				"width": 16,
+				"height": 32
+			},
+			{
+				"positionX": 56,
+				"positionY": 72,
+				"width": 16,
+				"height": 48
+			},
+			{
+				"positionX": 56,
+				"positionY": 180,
+				"width": 16,
+				"height": 64
+			},
+			{
+				"positionX": 88,
+				"positionY": 40,
+				"width": 16,
+				"height": 16
+			},
+			{
+				"positionX": 88,
+				"positionY": 180,
+				"width": 16,
+				"height": 96
+			},
+			{
+				"positionX": 120,
+				"positionY": 180,
+				"width": 16,
+				"height": 128
+			},
+			{
+				"positionX": 152,
+				"positionY": 136,
+				"width": 16,
+				"height": 112
+			},
+			{
+				"positionX": 184,
+				"positionY": 104,
+				"width": 16,
+				"height": 80
+			},
+			{
+				"positionX": 184,
+				"positionY": 180,
+				"width": 16,
+				"height": 32
+			},
+			{
+				"positionX": 216,
+				"positionY": 72,
+				"width": 16,
+				"height": 48
+			},
+			{
+				"positionX": 216,
+				"positionY": 180,
+				"width": 16,
+				"height": 64
+			},
+			{
+				"positionX": 248,
+				"positionY": 40,
+				"width": 16,
+				"height": 16
+			},
+			{
+				"positionX": 248,
+				"positionY": 180,
+				"width": 16,
+				"height": 96
+			},
+			{
+				"positionX": 280,
+				"positionY": 180,
+				"width": 16,
+				"height": 128
 			}
-		],
-		"grey_blocks": [
-		],
-		"yellow_blocks": [
-		],
-		"purple_blocks": [
 		],	
-		"texture_code": "81x-1,46,36x49,33,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,18x-1,16,8x17,31,8x-1,32,2x-1,47,18x-1,32,8x-1,47,8x-1,32,2x-1,47,18x-1,48,8x49,63,8x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,47,36x-1,32,2x-1,350,36x17,337",
+		"texture_code": "40x-1,40x-1,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,46,2x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,6x49,33,46,2x49,33,46,2x49,33,46,2x49,33,46,2x49,33,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,6x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,47,2x-1,32,350,2x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,6x17,337,350,2x17,337,350,2x17,337,350,2x17,337,350,2x17,337,40x-1,40x-1",
 
 		"staticLevelText": {
-			"value": "Default second level",
+			"value": "The second level",
 			"positionX": 0,
 			"positionY": 6,
 			"width": 320,
