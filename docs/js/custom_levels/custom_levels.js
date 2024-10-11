@@ -100,7 +100,7 @@ CustomLevelsHandler.__name__ = true;
 CustomLevelsHandler.prototype = {
 	loadCustomLevelsFromFile: function(levelPackFileName) {
 		var _gthis = this;
-		var levelPackUrl = $global.location.origin + "/custom_level_packs/" + levelPackFileName + ".json?" + new Date().getTime();
+		var levelPackUrl = $global.location.href + "custom_level_packs/" + levelPackFileName + ".json?" + new Date().getTime();
 		var http = new haxe_http_HttpJs(levelPackUrl);
 		http.onData = function(levelPackData) {
 			var loadedLevels = JSON.parse(levelPackData);

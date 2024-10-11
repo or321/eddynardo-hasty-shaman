@@ -16,7 +16,7 @@ class CustomLevelsHandler {
 	}
 
     private function loadCustomLevelsFromFile(levelPackFileName:String):Void {
-        var levelPackUrl = Browser.location.origin + "/custom_level_packs/" + levelPackFileName + ".json?" + Date.now().getTime();
+        var levelPackUrl = Browser.location.href + "custom_level_packs/" + levelPackFileName + ".json?" + Date.now().getTime();
 
 		var http = new haxe.Http(levelPackUrl);
 
