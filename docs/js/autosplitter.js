@@ -65,7 +65,7 @@ _autosplitter = function () {
 		var previousLevelTime = state.levelTime;
 		var transitionEnded = state.in_transition;
 
-		state.level = parseInt(sceneName.slice(5, 10));
+		state.level = parseInt(sceneName.split("Level")[1]);
 
 		// Check where we are now, based on the new layout name
 		state.in_menu = (sceneName === "Menu");
@@ -239,7 +239,7 @@ _autosplitter = function () {
 		if (state.speedrun_mode_active || !state.in_level) return;
 
 		// "+" or "=" key, to move to the next level
-		if ((e.which == 43 || e.which == 61) && state.level < 15) {
+		if ((e.which == 43 || e.which == 61) && state.level < window.customLevelsHandler.levels.length) {
 			moveToLevel(state.level + 1);
 		}
 

@@ -3,9 +3,10 @@ import js.Browser;
 class Level {
 	public var name:String;
 	public var scale:Int = 1;
+	public var globalMultiplier:Float = 1;
 
 	public var player:Player;
-	
+
 	public var bats:Array<Bat> = new Array<Bat>();
 	public var ghosts:Array<Ghost> = new Array<Ghost>();
 	public var fires:Array<Fire> = new Array<Fire>();
@@ -31,6 +32,12 @@ class Level {
 
 	public function new() {}
 
+	// Generate a random SID (stable unique ID) anywhere from 10^15 to 9 x 10^15,
+	// Which is okay because it's lower than 2^53 - 1 = 9007199254740991 (max stable integer in JavaScript)
+	function generateSID():Float {
+		return 1000000000000000 + Math.floor(Math.random() * 8000000000000000);
+	}
+
 	public static function copy(level:Level):Level {
 		var newLevel:Level = new Level();
 
@@ -39,6 +46,9 @@ class Level {
 		if (level.scale != null)
 			newLevel.scale = level.scale;
 
+		if (level.globalMultiplier != null)
+			newLevel.globalMultiplier = level.globalMultiplier;
+
 		if (level.texture_code != null)
 			newLevel.texture_code = level.texture_code;
 
@@ -46,7 +56,7 @@ class Level {
 
 		if (level.bats != null)
 			newLevel.bats = level.bats.map(bat -> Bat.copy(bat));
-		
+
 		if (level.ghosts != null)
 			newLevel.ghosts = level.ghosts.map(ghost -> Ghost.copy(ghost));
 
@@ -81,7 +91,7 @@ class Level {
 		return [
 			"BG",
 			0,
-			624342637661101,
+			generateSID(),
 			true,
 			[49, 53, 69],
 			false,
@@ -132,7 +142,7 @@ class Level {
 		return [
 			"GroundCol",
 			1,
-			405191807692717,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -151,24 +161,24 @@ class Level {
 
 	private function texturesLayer():Dynamic {
 		/*
-		top-left green corner inside wall: 46
-		top green ceiling: 49
-		top-right green corner inside wall: 33
-		left green wall: 47
-		right green wall: 32
-		bottom-left green corner inside wall: 350
-		bottom green floor: 17
-		bottom-right green corner inside wall: 337
-		top-left green corner: 16
-		top-right green corner: 31
-		bottom-left green corner: 48
-		bottom-right green corner: 63
+			top-left green corner inside wall: 46
+			top green ceiling: 49
+			top-right green corner inside wall: 33
+			left green wall: 47
+			right green wall: 32
+			bottom-left green corner inside wall: 350
+			bottom green floor: 17
+			bottom-right green corner inside wall: 337
+			top-left green corner: 16
+			top-right green corner: 31
+			bottom-left green corner: 48
+			bottom-right green corner: 63
 
 		 */
 		return [
 			"Ground",
 			2,
-			683889757010212,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -182,26 +192,7 @@ class Level {
 			0,
 			[
 				[
-					[
-						0,
-						0,
-						0,
-						320,
-						192,
-						0,
-						0,
-						1,
-						0,
-						0,
-						0,
-						0,
-						[[0, 1, 1]],
-						[
-							40,
-							24,
-							this.texture_code
-						]
-					],
+					[0, 0, 0, 320, 192, 0, 0, 1, 0, 0, 0, 0, [[0, 1, 1]], [40, 24, this.texture_code]],
 					12,
 					78,
 					[],
@@ -223,7 +214,7 @@ class Level {
 		return [
 			"UnderPlayer",
 			3,
-			427841631151004,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -250,7 +241,7 @@ class Level {
 		return [
 			"Enemies",
 			4,
-			213208484116281,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -271,7 +262,7 @@ class Level {
 		return [
 			"Player",
 			5,
-			443345487680383,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -284,8 +275,8 @@ class Level {
 			0,
 			0,
 			[
-				[[-24, 48, 0, 16, 24, 0, 0, 1, 0.5, 1, 0, 0, []], 8, 1069, [], [[], [0, 0, 0.8, 0.4, 1]], [0, "Idle", 0, 1]],
-				this.player.toLayoutComponent()
+				this.player.toPlayerSpriteLayoutComponent(globalMultiplier),
+				this.player.toPlayerHitboxLayoutComponent(globalMultiplier)
 			],
 			[]
 		];
@@ -293,22 +284,39 @@ class Level {
 
 	// No idea what this layer is supposed to be
 	private function overPlayerLayer():Dynamic {
-		return ["OverPlayer", 6, 530797518988833, true, [255, 255, 255], true, 1, 1, 1, false, false, 1, 0, 0, [], []];
+		return [
+			"OverPlayer",
+			6,
+			generateSID(),
+			true,
+			[255, 255, 255],
+			true,
+			1,
+			1,
+			1,
+			false,
+			false,
+			1,
+			0,
+			0,
+			[],
+			[]
+		];
 	}
 
-	private function uiLayer():Dynamic {
-		var instances:Array<Dynamic> = [this.camera.toLayoutComponent()];
+	private function uiLayer(levelIndex:Int):Dynamic {
+		var instances:Array<Dynamic> = [this.camera.toLayoutComponent(levelIndex)];
 
 		if (this.dynamicLevelText != null)
 			instances.push(this.dynamicLevelText.toLayoutComponent());
 
 		if (this.staticLevelText != null)
 			instances.push(this.staticLevelText.toLayoutComponent());
-		
+
 		return [
 			"UI",
 			7,
-			581021616472218,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -329,7 +337,7 @@ class Level {
 		return [
 			"FullScreenFX",
 			8,
-			176465583991634,
+			generateSID(),
 			true,
 			[255, 255, 255],
 			true,
@@ -342,40 +350,115 @@ class Level {
 			0,
 			0,
 			[
-				[[296, 16, 0, 22, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []], 37, 144, [], [], [0, "Default", 0, 1]],
+				[
+					[296, 16, 0, 22, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []],
+					37,
+					144,
+					[],
+					[],
+					[0, "Default", 0, 1]
+				],
 				[
 					[8, 8, 0, 64, 24, 0, 0, 1, 0, 0, 0, 0, []],
 					33,
 					75,
 					[],
 					[[1, 1, 0, 0, 0]],
-					[16, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>", "Text", 0.25, 0, 0, 0, 0, 0, 0, 0]
+					[
+						16,
+						16,
+						"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>",
+						"Text",
+						0.25,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0,
+						0
+					]
 				],
-				[[248, 16, 0, 45, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []], 36, 95, [], [], [0, "Default", 0, 1]],
-				[[304, -16, 0, 29, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []], 38, 147, [], [], [0, "Default", 0, 1]],
-				[[152, 80, 0, 368, 250, 0, 0, 1, 0.5, 0.5, 0, 0, []], 35, 92, [], [[1, 0, 0, 0.5, 1]], [0, "Default", 0, 1]],
+				[
+					[248, 16, 0, 45, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []],
+					36,
+					95,
+					[],
+					[],
+					[0, "Default", 0, 1]
+				],
+				[
+					[304, -16, 0, 29, 14, 0, 0, 0.6000000238418579, 0, 1, 0, 0, []],
+					38,
+					147,
+					[],
+					[],
+					[0, "Default", 0, 1]
+				],
+				[
+					[152, 80, 0, 368, 250, 0, 0, 1, 0.5, 0.5, 0, 0, []],
+					35,
+					92,
+					[],
+					[[1, 0, 0, 0.5, 1]],
+					[0, "Default", 0, 1]
+				],
 				[
 					[41, 2, 0, 88, 16, 0, 0, 0.5, 0, 0, 0, 0, []],
 					43,
 					916,
 					[],
 					[],
-					[16, 16, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>", "123456789", 0.5, 0, 0, 1, 0, 0, -2, 0]
+					[
+						16,
+						16,
+						"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:?!-_~#\"'&()[]|`\\/@°+=*$£€<>",
+						"123456789",
+						0.5,
+						0,
+						0,
+						1,
+						0,
+						0,
+						-2,
+						0
+					]
 				],
-				[[32, 208, 0, 50, 14, 0, 0, 0.800000011920929, 0.5012787580490112, 0.5045871734619141, 0, 0, []], 45, 1008, [], [], [0, "Default", 0, 1]]
+				[
+					[
+						32,
+						208,
+						0,
+						50,
+						14,
+						0,
+						0,
+						0.800000011920929,
+						0.5012787580490112,
+						0.5045871734619141,
+						0,
+						0,
+						[]
+					],
+					45,
+					1008,
+					[],
+					[],
+					[0, "Default", 0, 1]
+				]
 			],
 			[]
 		];
 	}
 
-	public function toLevelLayoutData():Dynamic {
+	public function toLevelLayoutData(levelIndex:Int):Dynamic {
 		return [
-			this.name,
+			"Level" + (levelIndex + 1),
 			320,
 			180,
 			true,
 			"LevelCode",
-			572186813770178,
+			generateSID(),
 			[
 				backgroundLayer(),
 				wallBlocksLayer(),
@@ -384,7 +467,7 @@ class Level {
 				enemiesLayer(),
 				playerLayer(),
 				overPlayerLayer(),
-				uiLayer(),
+				uiLayer(levelIndex),
 				fullScreenFXLayer()
 			],
 			[],

@@ -2,9 +2,12 @@
 	{
 		"name": "CustomLevel1",
 		"scale": 1,
+		"globalMultiplier": 0.5,
 		"player": {
 			"positionX": 180,
-			"positionY": 60
+			"positionY": 60,
+			"widthMultiplier": 1,
+			"heightMultiplier": 1
 		},
 		"bats": [
 			{
@@ -96,8 +99,8 @@
 		"player": {
 			"positionX": 16,
 			"positionY": 168,
-			"width": 9,
-			"height": 14
+			"widthMultiplier": 0.9,
+			"heightMultiplier": 0.9
 		},
 		"chests": [
 			{ 

@@ -4624,6 +4624,25 @@ quat4.str = function (a) {
 		if (!data_response || !data_response["project"])
 			cr.logerror("Project model unavailable");
 		var pm = data_response["project"];
+
+		/* Or321 - Inject the custom levels (before the project loads, acting like they are originally part of data.js) */
+		
+		// Remove the End layout temporarily
+		//*
+		const endLayoutData = pm[5].pop();
+		
+		for (let j = 0; j < window.customLevelsHandler.levels.length; j++){
+			const level = window.customLevelsHandler.levels[j];
+			const customLayout = level.toLevelLayoutData(j);
+
+			pm[5].push(customLayout);
+		}
+		//debugger;
+		// Re-add End layout
+		pm[5].push(endLayoutData);
+        //*/
+		/* Or321 - end custom levels injection */
+
 		this.name = pm[0];
 		this.first_layout = pm[1];
 		this.fullscreen_mode = pm[12]; // 0 = off, 1 = crop, 2 = scale inner, 3 = scale outer, 4 = letterbox scale, 5 = integer letterbox scale
@@ -4893,19 +4912,6 @@ quat4.str = function (a) {
 		for (i = 0, len = pm[5].length; i < len; i++) {
 			m = pm[5][i];
 			var layout = new cr.layout(this, m);
-
-			if (layout.name === "End"){
-				// Or321 - load the custom levels before the "End" layout
-				for (j = 0; j < window.customLevelsHandler.levels.length; j++){
-					let level = window.customLevelsHandler.levels[j];
-					let customLayout = new cr.layout(this, level.toLevelLayoutData());
-		
-					cr.seal(customLayout);
-					this.layouts[customLayout.name] = customLayout;
-					this.layouts_by_index.push(customLayout);
-				}
-			}
-
 			cr.seal(layout);
 			this.layouts[layout.name] = layout;
 			this.layouts_by_index.push(layout);

@@ -9,7 +9,8 @@ class Camera {
 	}
 
 	// Transforming the class into a structure for the game code
-	public function toLayoutComponent():Dynamic {
+	public function toLayoutComponent(levelIndex:Int):Dynamic {
+		var levelNumber:Int = levelIndex + 1;
 		return [
 			[
 				160, 
@@ -28,7 +29,7 @@ class Camera {
 			], 
 			24, 
 			102, 
-			[[1], [1], [0], [0]], 
+			[[1], [levelNumber], [0], [0]], 
 			[[1]], 
 			[1, "Default", 0, 1]
 		];
