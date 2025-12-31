@@ -4628,7 +4628,6 @@ quat4.str = function (a) {
 		/* Or321 - Inject the custom levels (before the project loads, acting like they are originally part of data.js) */
 		
 		// Remove the End layout temporarily
-		//*
 		const endLayoutData = pm[5].pop();
 		
 		for (let j = 0; j < window.customLevelsHandler.levels.length; j++){
@@ -4637,10 +4636,9 @@ quat4.str = function (a) {
 
 			pm[5].push(customLayout);
 		}
-		//debugger;
 		// Re-add End layout
 		pm[5].push(endLayoutData);
-        //*/
+        
 		/* Or321 - end custom levels injection */
 
 		this.name = pm[0];

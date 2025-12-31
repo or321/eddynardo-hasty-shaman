@@ -3,10 +3,10 @@
 -cp custom_level_haxe_files/models
 -cp custom_level_haxe_files/services
 -cp custom_level_haxe_files/
--js ./docs/js/custom_levels/custom_levels.js
+-js ./docs/hasty-shaman/js/custom_levels/custom_levels.js
 
---next
+#--next
 
--main Main
--cp tas_haxe_files/
--js ./docs/js/tas/coffee.js
+#-main Main
+#-cp tas_haxe_files/
+#-js ./docs/js/tas/coffee.js

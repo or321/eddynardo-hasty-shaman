@@ -81,9 +81,9 @@ _autosplitter = function () {
 			state.levelTime = 0;
 			document.getElementById("level_timer").innerText = (0).toFixed(decimal_places_display);
 			
-			wrTimes = _wrs.getTimes();
-			$("#level_wr_title").text(wrTimes.title);
-			$("#level_wr").text(wrTimes.wrs[state.level - 1]);
+			//wrTimes = _wrs.getTimes();
+			//$("#level_wr_title").text(wrTimes.title);
+			//$("#level_wr").text(wrTimes.wrs[state.level - 1]);
 
 			$("#level_select_message").css("visibility", "visible");
 
