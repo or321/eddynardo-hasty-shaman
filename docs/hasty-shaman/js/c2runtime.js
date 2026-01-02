@@ -3881,6 +3881,35 @@ quat4.str = function (a) {
 		else
 			canvas["c2runtime"] = this;
 		var self = this;
+
+		// Or321 - creating an "event bus" to notify extensions on internal game events.
+		this.events = (function () {
+			const listeners = Object.create(null);
+
+			function on(event, fn) {
+				(listeners[event] ??= []).push(fn);
+			}
+
+			function trigger(event, payload) {
+				const list = listeners[event];
+				if (!list) return;
+
+				for (let i = 0; i < list.length; i++) {
+					try {
+						list[i](payload);
+					} catch (e) {
+						console.error(
+							"game.events listener error:",
+							event,
+							e
+						);
+					}
+				}
+			}
+
+			return { on, trigger };
+		})();
+
 		this.isCrosswalk = /crosswalk/i.test(navigator.userAgent) || /xwalk/i.test(navigator.userAgent) || !!(typeof window["c2isCrosswalk"] !== "undefined" && window["c2isCrosswalk"]);
 		this.isCordova = this.isCrosswalk || (typeof window["device"] !== "undefined" && (typeof window["device"]["cordova"] !== "undefined" || typeof window["device"]["phonegap"] !== "undefined")) || (typeof window["c2iscordova"] !== "undefined" && window["c2iscordova"]);
 		this.isPhoneGap = this.isCordova;
