@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 
 	<!-- Standardised web app manifest -->
-	<link rel="manifest" href="appmanifest.json" />
+	<!--<link rel="manifest" href="appmanifest.json" />-->
 
 	<!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
 	<meta name="viewport"
@@ -41,6 +41,14 @@
 		</canvas>
 	</div>
 
+	<template id="level-timer-template">
+		<div id="level-timer-container">Level time: <span id="level-timer" class="data-number"></span></div>
+	</template>
+	<div class="autosplitter-data" id="autosplitter-data">
+		<!--<div id="level_timer_container"> Level time: <span id="level_timer" class="data-number"></span></div>-->
+	</div>
+
+	<!--
 	<div class="autosplitter-data" id="autosplitter_data">
 		<div> Level time: <span id="level_timer" class="data-number">---</span> || </div>
 		<div> <span id="level_wr_title">WR</span>: <span id="level_wr" class="data-number">---</span> || </div>
@@ -180,9 +188,7 @@
 
 
 	<div id="div_music_volume" class="music-volume-message"></div>
-
-
-	<!-- Pages load faster with scripts at the bottom -->
+	-->
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
   		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -194,9 +200,13 @@
 		const TAS_MODE = false;
 	</script>
 
+	<!--
 	<script src="js/speedrun_stats_handler.js"></script>
 	<script src="js/volume_handler.js"></script>
 	<script src="js/autosplitter.js"></script>
+	-->
+	<script src="../js/main.js" type="module"></script>
+
 	<script src="js/custom_levels/custom_levels.js"></script>
 
 	<script src="js/c2runtime.js"></script>

@@ -2,7 +2,7 @@
 	{
 		"name": "CustomLevel1",
 		"scale": 1,
-		"globalMultiplier": 0.5,
+		"globalMultiplier": 1,
 		"player": {
 			"positionX": 180,
 			"positionY": 60,

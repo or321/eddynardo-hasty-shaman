@@ -3881,35 +3881,6 @@ quat4.str = function (a) {
 		else
 			canvas["c2runtime"] = this;
 		var self = this;
-
-		// Or321 - creating an "event bus" to notify extensions on internal game events.
-		this.events = (function () {
-			const listeners = Object.create(null);
-
-			function on(event, fn) {
-				(listeners[event] ??= []).push(fn);
-			}
-
-			function trigger(event, payload) {
-				const list = listeners[event];
-				if (!list) return;
-
-				for (let i = 0; i < list.length; i++) {
-					try {
-						list[i](payload);
-					} catch (e) {
-						console.error(
-							"game.events listener error:",
-							event,
-							e
-						);
-					}
-				}
-			}
-
-			return { on, trigger };
-		})();
-
 		this.isCrosswalk = /crosswalk/i.test(navigator.userAgent) || /xwalk/i.test(navigator.userAgent) || !!(typeof window["c2isCrosswalk"] !== "undefined" && window["c2isCrosswalk"]);
 		this.isCordova = this.isCrosswalk || (typeof window["device"] !== "undefined" && (typeof window["device"]["cordova"] !== "undefined" || typeof window["device"]["phonegap"] !== "undefined")) || (typeof window["c2iscordova"] !== "undefined" && window["c2iscordova"]);
 		this.isPhoneGap = this.isCordova;
@@ -4561,7 +4532,8 @@ quat4.str = function (a) {
 		}
 
 		// AUTOSPLITTER 1 - on changing the canvas size
-		_autosplitter.onCanvasResize();
+		//_autosplitter.onCanvasResize();
+		window.gameEvents.trigger(window.GAME_EVENTS.CANVAS_RESIZED, {w, h});
 	};
 	Runtime.prototype.tryLockOrientation = function () {
 		if (!this.autoLockOrientation || this.orientations === 0)
@@ -4668,7 +4640,7 @@ quat4.str = function (a) {
 		// Re-add End layout
 		pm[5].push(endLayoutData);
         
-		/* Or321 - end custom levels injection */
+		/* End custom levels injection */
 
 		this.name = pm[0];
 		this.first_layout = pm[1];
@@ -5445,7 +5417,8 @@ quat4.str = function (a) {
 		this.wallTime.add(wallDt); // prevent min/max framerate affecting wall clock
 
 		// AUTOSPLITTER 2 - game loop top level - after calculating time in this frame
-		_autosplitter.onUpdate(this.dt);
+		//_autosplitter.onUpdate(this.dt);
+		window.gameEvents.trigger(window.GAME_EVENTS.GAME_FRAME_PASSED, this.dt);
 
 		var isfullscreen = (document["mozFullScreen"] || document["webkitIsFullScreen"] || document["fullScreen"] || !!document["msFullscreenElement"] || this.isNodeFullscreen) && !this.isCordova;
 		if (this.fullscreen_mode >= 2 /* scale */ || (isfullscreen && this.fullscreen_scaling > 0)) {
@@ -5554,7 +5527,8 @@ quat4.str = function (a) {
 	};
 	Runtime.prototype.doChangeLayout = function (changeToLayout) {
 		// AUTOSPLITTER 3 - On starting a new level
-		_autosplitter.onScene(changeToLayout.name);
+		//_autosplitter.onScene(changeToLayout.name);
+		window.gameEvents.trigger(window.GAME_EVENTS.LAYOUT_CHANGED, changeToLayout.name);
 
 		var prev_layout = this.running_layout;
 		this.running_layout.stopRunning();
@@ -16403,12 +16377,13 @@ cr.plugins_.Audio = function (runtime) {
 	function Acts() {};
 	Acts.prototype.Play = function (file, looping, vol, tag) {
 		// AUTOSPLITTER 4 - on playing a sound file
-		var soundName = file[0];
+		/*
+		const soundName = file[0];
 		_autosplitter.onSound(soundName);
 
 		if (soundName.indexOf("rolemusic") >= 0 && _volumeHandler.isMusicSilent())
 			return;
-
+		*/
 		if (silent)
 			return;
 		var v = dbToLinear(vol);

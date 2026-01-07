@@ -12,10 +12,11 @@
 
 			cr_sizeCanvas(jQuery(window).width(), jQuery(window).height());
 
-			_autosplitter.onScene("Menu");
+			window.gameEvents.trigger(window.GAME_EVENTS.GAME_LOADED, window.game);
+			//_autosplitter.onScene("Menu");
 		}
 		else{
-			setTimeout(startGame, 50);
+			setTimeout(startGame, 10);
 		}
 	}
 
