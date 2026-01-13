@@ -8,7 +8,7 @@ const state = {
 	inGame: false,
 	inTransition: false,
 	inSpeedrun: false,
-	showLevelTimerSetting: false,
+	practiceModeSetting: false,
 }
 
 function shouldTick() {
@@ -18,7 +18,7 @@ function shouldTick() {
 function shouldBeVisible() {
 	if (!state.inGame) return false;
 	if (state.inSpeedrun) return true;
-	return state.showLevelTimerSetting;
+	return state.practiceModeSetting;
 }
 
 function updateVisibility() {
@@ -42,7 +42,7 @@ on(GAME_EVENTS.GAME_FRAME_PASSED, (dt) => {
 });
 
 on(GAME_EVENTS.SETTINGS_CHANGED, (settings) => {
-	state.showLevelTimerSetting = settings.showLevelTimer;
+	state.practiceModeSetting = settings.practiceMode;
 	updateVisibility();
 });
 

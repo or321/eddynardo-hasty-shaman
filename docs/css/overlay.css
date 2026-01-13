@@ -1,0 +1,21 @@
+.time-data {
+    color: rgb(0, 173, 0);
+
+	&.fake {
+		color: rgb(255, 70, 70);
+	}
+}
+
+#timers-container {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	padding: 8px;
+	background-color: rgba(25, 25, 25, 0.8);
+}
+
+#fps-counter {
+	position: absolute;
+	padding: 8px;
+}

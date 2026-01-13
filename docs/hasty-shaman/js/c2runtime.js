@@ -4533,7 +4533,7 @@ quat4.str = function (a) {
 
 		// AUTOSPLITTER 1 - on changing the canvas size
 		//_autosplitter.onCanvasResize();
-		window.gameEvents.trigger(window.GAME_EVENTS.CANVAS_RESIZED, {w, h});
+		window.gameEvents.trigger(window.GAME_EVENTS.CANVAS_RESIZED);
 	};
 	Runtime.prototype.tryLockOrientation = function () {
 		if (!this.autoLockOrientation || this.orientations === 0)

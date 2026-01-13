@@ -19,6 +19,7 @@ canvas {
     -ms-touch-action: none;
 }
 
+/*
 .td-spacer {
     width: 20px;
 }
@@ -54,7 +55,7 @@ canvas {
 }
 
 .speedrun-stats-modal {
-    /* Hidden by default */
+    
     display: none;
     
     position: fixed;
@@ -100,7 +101,7 @@ canvas {
 }
 
 .extra-speedrun-stats-modal {
-    /* Hidden by default */
+    
     display: none;
     
     position: fixed;
@@ -134,7 +135,7 @@ canvas {
 
 
 .music-volume-message {
-    /* Hidden by default */
+    
     display: none;
 
     position: fixed;
@@ -152,3 +153,4 @@ canvas {
     font-size: 27px;
     text-align: center;
 }
+*/

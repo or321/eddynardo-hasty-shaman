@@ -1,6 +1,6 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
 import { on } from "../core/gameEvents.js";
-import * as levelTimer from "../state/levelTimer.js";
+import * as speedrunTimer from "../state/speedrunTimer.js";
 
 const state = {
 	initialized: false,
@@ -13,21 +13,21 @@ on(GAME_EVENTS.SETTINGS_CHANGED, (settings) => {
 	state.timerPrecisionSetting = settings.timersPrecision;
 });
 
-on(GAME_EVENTS.LEVEL_TIMER_CHANGED, (timerState) => {
+on(GAME_EVENTS.SPEEDRUN_TIMER_CHANGED, (timerState) => {
 	applyTimerState(timerState)
 });
 
-function applyTimerState({visible, levelTime}){
+function applyTimerState({visible, speedrunTime}){
 	if (!state.initialized) return;
-
+	
 	state.$containerEl.toggle(visible);
-	state.$timerEl.text(levelTime.toFixed(state.timerPrecisionSetting));
+	state.$timerEl.text(speedrunTime.toFixed(state.timerPrecisionSetting));
 }
 
 export function initialize(){
 	state.initialized = true;
-	state.$timerEl = $("#level-timer");
-	state.$containerEl = $("#level-timer-container");
+	state.$timerEl = $("#speedrun-timer");
+	state.$containerEl = $("#speedrun-timer-container");
 
-	applyTimerState(levelTimer.getState());
+	applyTimerState(speedrunTimer.getState());
 }

@@ -3,9 +3,8 @@ import { trigger } from "../core/gameEvents.js";
 
 const DEFAULTS = {
 	muteMusic: false,
-	practiceMode: false,
-	showLevelTimer: true,
-	timersPrecision: 2
+	practiceMode: true,
+	timersPrecision: 2,
 };
 
 let currentSettings = null;
@@ -37,7 +36,7 @@ export function set(key, value) {
 	trigger(GAME_EVENTS.SETTINGS_CHANGED, { ...currentSettings });
 }
 
-export function initializeSettings(){
+export function initialize(){
 	const localStorageSettings = loadFromLocalStorage() ?? {};
 	currentSettings = { ...DEFAULTS, ...localStorageSettings };
 
