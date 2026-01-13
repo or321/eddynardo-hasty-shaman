@@ -32,6 +32,9 @@ export const GAME_EVENTS = Object.freeze({
 	/* Timer events */
 	LEVEL_TIMER_CHANGED: "levelTimer:changed",
 	SPEEDRUN_TIMER_CHANGED: "speedrunTimer:changed",
+
+	/* FPS counter */
+	FPS_COUNTER_CHANGED: "fpsCounter:changed",
 });
 
 window.GAME_EVENTS = GAME_EVENTS;

@@ -5,6 +5,7 @@ const DEFAULTS = {
 	muteMusic: false,
 	practiceMode: true,
 	timersPrecision: 2,
+	showFpsCounter: true,
 };
 
 let currentSettings = null;

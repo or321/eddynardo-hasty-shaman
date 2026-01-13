@@ -1,17 +1,11 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
 import { on, trigger } from "../core/gameEvents.js";
-import { waitForGame } from "../core/waitForGame.js";
+import { getGameAdapter } from "../core/currentGameAdapter.js";
 
 const state = {
 	currentLayoutName: null,
 	previousLayoutName: null
 };
-
-async function isInSpeedrun() {
-	const game = await waitForGame();
-	const speedrunningVariable = game.all_global_vars.find(obj => obj.name === "IsSpeedRunning");
-	return speedrunningVariable?.data === "true";
-}
 
 on(GAME_EVENTS.LAYOUT_CHANGED, (layoutName) => {
 	console.log("LAYOUT_CHANGED", layoutName);
@@ -24,7 +18,9 @@ on(GAME_EVENTS.LAYOUT_CHANGED, (layoutName) => {
 		trigger(GAME_EVENTS.LEVEL_STARTED, levelNumber);
 
 		if (levelNumber === 1) {
-			trigger(GAME_EVENTS.GAME_STARTED, { inSpeedrun: isInSpeedrun() });
+			const gameAdapter = getGameAdapter();
+			const inSpeedrun = gameAdapter.isInSpeedrun();
+			trigger(GAME_EVENTS.GAME_STARTED, { inSpeedrun: inSpeedrun });
 		}
 
 		if (state.currentLayoutName === state.previousLayoutName) {

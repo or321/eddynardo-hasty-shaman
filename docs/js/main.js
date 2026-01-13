@@ -6,11 +6,13 @@ import "./core/gameEvents.js";
 import * as settings from "./state/settings.js";
 import "./state/levelTimer.js";
 import "./state/speedrunTimer.js";
+import "./state/fpsCounter.js";
 
 /* View components */
 import * as levelTimerView from "./views/levelTimerView.js";
 import * as speedrunTimerView from "./views/speedrunTimerView.js";
 import * as timersContainerView from "./views/timersContainerView.js";
+import * as fpsCounterView from "./views/fpsCounterView.js";
 
 /* Custom effects */
 
@@ -37,6 +39,7 @@ async function bootstrap() {
 	levelTimerView.initialize();
 	speedrunTimerView.initialize();
 	timersContainerView.initialize();
+	fpsCounterView.initialize();
 }
 
 bootstrap();
