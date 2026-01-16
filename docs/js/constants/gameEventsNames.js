@@ -33,10 +33,14 @@ export const GAME_EVENTS = Object.freeze({
 
 	/* Timer events */
 	LEVEL_TIMER_CHANGED: "levelTimer:changed",
+	LEVEL_TIMER_VISIBILITY_CHANGED: "levelTimer:visibilityChanged",
+
 	SPEEDRUN_TIMER_CHANGED: "speedrunTimer:changed",
+	SPEEDRUN_TIMER_VISIBILITY_CHANGED: "speedrunTimer:visibilityChanged",
 
 	/* FPS counter */
 	FPS_COUNTER_CHANGED: "fpsCounter:changed",
+	FPS_COUNTER_VISIBILITY_CHANGED: "fpsCounter:visibilityChanged",
 });
 
 window.GAME_EVENTS = GAME_EVENTS;

@@ -1,18 +1,18 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
 import { on, trigger } from "../core/gameEvents.js";
+import { getGameState } from "./gameState.js";
 
 const state = {
 	visible: false,
 	speedrunTime: 0,
-	inSpeedrun: false,
 }
 
 function shouldTick() {
-	return state.inSpeedrun;
+	return getGameState().inSpeedrun;
 }
 
 function shouldBeVisible() {
-	return state.inSpeedrun;
+	return getGameState().inSpeedrun;
 }
 
 function updateVisibility() {
@@ -20,30 +20,21 @@ function updateVisibility() {
 
 	if (nextVisible != state.visible) {
 		state.visible = nextVisible;
-		triggerTimerChanged();
+		trigger(GAME_EVENTS.SPEEDRUN_TIMER_VISIBILITY_CHANGED, { visible: state.visible });
 	}
-}
-
-function triggerTimerChanged() {
-	trigger(GAME_EVENTS.SPEEDRUN_TIMER_CHANGED, getState());
 }
 
 on(GAME_EVENTS.GAME_FRAME_PASSED, (dt) => {
 	if (!shouldTick()) return;
 
 	state.speedrunTime += dt;
-	triggerTimerChanged();
+	trigger(GAME_EVENTS.SPEEDRUN_TIMER_CHANGED, { speedrunTime: state.speedrunTime });
 });
+
+on(GAME_EVENTS.GAME_STATE_CHANGED, updateVisibility);
 
 on(GAME_EVENTS.SPEEDRUN_STARTED, () => {
-	state.inSpeedrun = true;
 	state.speedrunTime = 0;
-	updateVisibility();
-});
-
-on(GAME_EVENTS.SPEEDRUN_STOPPED, () => {
-	state.inSpeedrun = false;
-	updateVisibility();
 });
 
 export function getState() {

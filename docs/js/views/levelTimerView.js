@@ -1,33 +1,33 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
 import { on } from "../core/gameEvents.js";
+import * as settings from "../state/settings.js";
+import { TIMERS_PRECISION } from "../constants/settingsNames.js";
 import * as levelTimer from "../state/levelTimer.js";
 
 const state = {
 	initialized: false,
 	$timerEl: null,
 	$containerEl: null,
-	timerPrecisionSetting: 2,
 }
 
-on(GAME_EVENTS.SETTINGS_CHANGED, (settings) => {
-	state.timerPrecisionSetting = settings.timersPrecision;
-});
-
-on(GAME_EVENTS.LEVEL_TIMER_CHANGED, (timerState) => {
-	applyTimerState(timerState)
-});
-
-function applyTimerState({visible, levelTime}){
+on(GAME_EVENTS.LEVEL_TIMER_VISIBILITY_CHANGED, ({ visible }) => {
 	if (!state.initialized) return;
 
 	state.$containerEl.toggle(visible);
-	state.$timerEl.text(levelTime.toFixed(state.timerPrecisionSetting));
-}
+});
 
-export function initialize(){
+on(GAME_EVENTS.LEVEL_TIMER_CHANGED, ({ levelTime }) => {
+	if (!state.initialized) return;
+
+	const timerPrecisionSetting = settings.get(TIMERS_PRECISION);
+	const timerText = levelTime.toFixed(timerPrecisionSetting);
+	state.$timerEl.text(timerText);
+});
+
+export function initialize() {
 	state.initialized = true;
 	state.$timerEl = $("#level-timer");
 	state.$containerEl = $("#level-timer-container");
 
-	applyTimerState(levelTimer.getState());
+	state.$containerEl.toggle(levelTimer.getState().visible);
 }

@@ -6,11 +6,11 @@ const state = {
 	initialized: false,
 	$fpsCounterEl: null,
 	$canvasEl: null,
-	visible: false,
 }
 
 function positionElement() {
-	if (!state.initialized || !state.visible) return;
+	if (!state.initialized) return;
+	if (!fpsCounter.getState().visible) return;
 
 	const canvasX = parseInt(state.$canvasEl.css("margin-left"));
 	const canvasY = parseInt(state.$canvasEl.css("margin-top"));
@@ -19,35 +19,33 @@ function positionElement() {
 	const fpsCounterWidth = state.$fpsCounterEl.outerWidth();
 	const fpsCounterHeight = state.$fpsCounterEl.outerHeight();
 
+	// Anchor the element to the bottom-right corner of the canvas
 	state.$fpsCounterEl.css({
 		left: canvasX + canvasWidth - fpsCounterWidth,
 		top: canvasY + canvasHeight - fpsCounterHeight
 	});
 }
 
-on(GAME_EVENTS.CANVAS_RESIZED, () => {
-	positionElement();
+on(GAME_EVENTS.CANVAS_RESIZED, positionElement);
+
+on(GAME_EVENTS.FPS_COUNTER_VISIBILITY_CHANGED, ({visible}) =>{
+	if (!state.initialized) return;
+	
+	state.$fpsCounterEl.toggle(visible);
+	if (visible) {
+		positionElement();
+	}
 });
 
-on(GAME_EVENTS.FPS_COUNTER_CHANGED, (state) => {
-	applyState(state)
-});
-
-function applyState({visible, fps}){
+on(GAME_EVENTS.FPS_COUNTER_CHANGED, ({fps}) => {
 	if (!state.initialized) return;
 
 	state.$fpsCounterEl.text(fps);
-	
-	state.$fpsCounterEl.toggle(visible);
-	state.visible = visible;
+	positionElement();
+});
 
-	positionElement();	
-}
-
-export function initialize(){
+export function initialize() {
 	state.initialized = true;
 	state.$fpsCounterEl = $("#fps-counter");
 	state.$canvasEl = $("#c2canvasdiv");
-
-	applyState(fpsCounter.getState());
 }

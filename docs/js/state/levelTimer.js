@@ -1,6 +1,7 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
 import { on, trigger } from "../core/gameEvents.js";
 import * as settings from "../state/settings.js";
+import { PRACTICE_MODE } from "../constants/settingsNames.js";
 import { getGameState } from "./gameState.js";
 
 const state = {
@@ -19,7 +20,7 @@ function shouldBeVisible() {
 
 	if (!gameState.inGame) return false;
 	if (gameState.inSpeedrun) return true;
-	return settings.get("practiceMode");
+	return settings.get(PRACTICE_MODE);
 }
 
 function updateVisibility() {
@@ -27,19 +28,15 @@ function updateVisibility() {
 
 	if (nextVisible != state.visible) {
 		state.visible = nextVisible;
-		triggerTimerChanged();
+		trigger(GAME_EVENTS.LEVEL_TIMER_VISIBILITY_CHANGED, { visible: state.visible });
 	}
-}
-
-function triggerTimerChanged() {
-	trigger(GAME_EVENTS.LEVEL_TIMER_CHANGED, getState());
 }
 
 on(GAME_EVENTS.GAME_FRAME_PASSED, (dt) => {
 	if (!shouldTick()) return;
 
 	state.levelTime += dt;
-	triggerTimerChanged();
+	trigger(GAME_EVENTS.LEVEL_TIMER_CHANGED, { levelTime: state.levelTime });
 });
 
 on(GAME_EVENTS.SETTINGS_CHANGED, updateVisibility);
