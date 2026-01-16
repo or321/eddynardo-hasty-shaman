@@ -8,6 +8,8 @@ export const GAME_EVENTS = Object.freeze({
 	GAME_COMPLETED: "game:completed",
 	GAME_ABORTED: "game:aborted",
 
+	GAME_STATE_CHANGED: "gameState:changed",
+
 	/* Canvas events */
 	CANVAS_RESIZED: "canvas:resized",
 	

@@ -32,14 +32,14 @@ on(GAME_EVENTS.LAYOUT_CHANGED, (layoutName) => {
 		&&
 		!state.currentLayoutName.includes("Level")) {
 
-		trigger(GAME_EVENTS.GAME_STOPPED);
-
 		if (state.currentLayoutName === "End") {
-			trigger(GAME_EVENTS.GAME_COMPLETED);
+			trigger(GAME_EVENTS.GAME_STOPPED, { reason: 'completed' });
 		}
-
-		if (state.currentLayoutName === "Menu") {
-			trigger(GAME_EVENTS.GAME_ABORTED);
+		else if (state.currentLayoutName === "Menu") {
+			trigger(GAME_EVENTS.GAME_STOPPED, { reason: 'aborted' });
+		}
+		else {
+			trigger(GAME_EVENTS.GAME_STOPPED, { reason: 'unknown' });
 		}
 	}
 });

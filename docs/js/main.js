@@ -4,6 +4,7 @@ import "./core/gameEvents.js";
 
 /* State components */
 import * as settings from "./state/settings.js";
+import "./state/gameState.js";
 import "./state/levelTimer.js";
 import "./state/speedrunTimer.js";
 import "./state/fpsCounter.js";
@@ -20,7 +21,7 @@ import * as fpsCounterView from "./views/fpsCounterView.js";
 import "./translators/layoutChangedTranslator.js";
 
 /* Event detectors (same as translators, but focus on specific outcome) */
-import "./detectors/speedrunEventsDetector.js";
+
 
 function initUI() {
 	return $.get("../templates/uiTemplate.html")
