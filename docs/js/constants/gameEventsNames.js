@@ -41,6 +41,10 @@ export const GAME_EVENTS = Object.freeze({
 	/* FPS counter */
 	FPS_COUNTER_CHANGED: "fpsCounter:changed",
 	FPS_COUNTER_VISIBILITY_CHANGED: "fpsCounter:visibilityChanged",
+
+	/* Navigation events */
+	NEXT_LEVEL_REQUESTED: "nextLevel:requested",
+	PREVIOUS_LEVEL_REQUESTED: "previousLevel:requested",
 });
 
 window.GAME_EVENTS = GAME_EVENTS;

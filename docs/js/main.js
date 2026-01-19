@@ -16,8 +16,10 @@ import * as timersContainerView from "./views/timersContainerView.js";
 import * as fpsCounterView from "./views/fpsCounterView.js";
 
 /* Custom effects */
+import "./effects/levelNavigationEffect.js";
 
 /* Event translators (transfer some events into other events) */
+import "./translators/keyboardInputsTranslator.js";
 import "./translators/layoutChangedTranslator.js";
 
 /* Event detectors (same as translators, but focus on specific outcome) */
