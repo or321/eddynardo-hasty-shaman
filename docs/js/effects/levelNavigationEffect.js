@@ -1,5 +1,5 @@
 import { GAME_EVENTS } from "../constants/gameEventsNames.js";
-import { on, trigger } from "../core/gameEvents.js";
+import { on } from "../core/gameEvents.js";
 import * as settings from "../state/settings.js";
 import { PRACTICE_MODE } from "../constants/settingsNames.js";
 import { getGameState } from "../state/gameState.js";
