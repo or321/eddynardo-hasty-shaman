@@ -13135,6 +13135,9 @@ cr.system_object.prototype.loadFromJSON = function (o) {
 	SysExps.prototype.originalwindowheight = function (ret) {
 		ret.set_int(this.runtime.original_height);
 	};
+	SysExps.prototype.toFixed = function (ret, value, decimalPlaces) {
+		ret.set_string(value.toFixed(decimalPlaces));
+	};
 	sysProto.exps = new SysExps();
 	sysProto.runWaits = function () {
 		var i, j, len, w, k, s, ss;
@@ -27779,6 +27782,7 @@ cr.getObjectRefTable = function () {
 		cr.plugins_.Particles.prototype.acts.SetAngle,
 		cr.system_object.prototype.acts.SetLayerBackground,
 		cr.system_object.prototype.exps.rgb,
-		cr.plugins_.Tilemap.prototype.acts.SetEffectParam
+		cr.plugins_.Tilemap.prototype.acts.SetEffectParam,
+		cr.system_object.prototype.exps.toFixed
 	];
 };
